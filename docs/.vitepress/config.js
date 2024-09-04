@@ -1,6 +1,6 @@
 // .vitepress/config.js
 
-const base = "/blog/";
+const base = "/blog";
 export default {
   base,
   // 站点级选项
