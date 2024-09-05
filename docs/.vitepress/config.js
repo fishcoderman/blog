@@ -3,6 +3,7 @@
 const base = "/blog/";
 export default {
   base,
+  lastUpdated: true,
   // 站点级选项
   title: "首页",
   description: "诗酒趁年华",
@@ -18,36 +19,60 @@ export default {
     },
     nav: [
       {
-        text: "大前端",
+        text: "前端",
         items: [
-          { text: "html", link: "/bigFrontEnd/html/" },
-          { text: "css", link: "/bigFrontEnd/css/" },
-          { text: "js", link: "/bigFrontEnd/js/" },
+          { text: "react", link: "/frontend/react/" },
+          { text: "vue", link: "/frontend/vue/" },
+          { text: "js", link: "/frontend/js/" },
+          { text: "工程化", link: "/frontend/structure/" },
+        ],
+      },
+      {
+        text: "服务端",
+        items: [
+          { text: "html", link: "/backend/html/" },
+          { text: "css", link: "/backend/css/" },
+          { text: "js", link: "/backend/js/" },
+        ],
+      },
+      {
+        text: "生活",
+        items: [
+          { text: "html", link: "/frontend/html/" },
+          { text: "css", link: "/frontend/css/" },
+          { text: "js", link: "/frontend/js/" },
         ],
       },
       { text: "关于", link: "/about" },
     ],
     sidebar: {
-      "/bigFrontEnd/html/": {
-        text: "html",
+      "/frontend/react/": {
+        text: "react",
         items: [
-          { text: "html", link: "/bigFrontEnd/html/" },
-          { text: "html1", link: "/bigFrontEnd/html/html1" },
-          { text: "html2", link: "bigFrontEnd/html/html2" },
+          { text: "html", link: "/frontend/html/" },
+          { text: "html1", link: "/frontend/html/html1" },
+          { text: "html2", link: "frontend/html/html2" },
         ],
       },
-      "/bigFrontEnd/css/": {
+      "/frontend/css/": {
         text: "css",
         items: [
-          { text: "css1", link: "/bigFrontEnd/css/css1" },
-          { text: "css2", link: "/bigFrontEnd/css/css2" },
+          { text: "css1", link: "/frontend/css/css1" },
+          { text: "css2", link: "/frontend/css/css2" },
         ],
       },
-      "/bigFrontEnd/js/": {
+      "/frontend/js/": {
         text: "js",
         items: [
-          { text: "js1", link: "/bigFrontEnd/js/js1" },
-          { text: "js2", link: "/bigFrontEnd/js/js2" },
+          { text: "js1", link: "/frontend/js/js1" },
+          { text: "js2", link: "/frontend/js/js2" },
+        ],
+      },
+      "/frontend/structure/": {
+        text: "工程化",
+        items: [
+          { text: "webpack模块化打包原理", link: "/frontend/structure/webpack模块化打包原理" },
+          { text: "移动端主题切换", link: "/frontend/structure/移动端主题切换" },
         ],
       },
     },
