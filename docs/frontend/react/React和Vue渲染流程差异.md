@@ -1,3 +1,5 @@
+# React和Vue渲染流程差异
+
 ### React 状态变更更新流程：
 
 setState 或 useState 触发更新
