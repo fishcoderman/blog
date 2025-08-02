@@ -6,5 +6,5 @@
 
 ## 目录
 
-- [React专题](./react.md)
-- [工程化专题](./structure.md)
+- [React专题](./react/)
+- [工程化专题](./structure/)

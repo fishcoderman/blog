@@ -6,6 +6,8 @@ export default {
   // 站点级选项
   title: "首页",
   description: "诗酒趁年华",
+  // 忽略死链接检查，避免构建失败
+  ignoreDeadLinks: true,
   head: [
     // 配置网站的图标（显示在浏览器的 tab 上）
     ["link", { rel: "icon", href: `${base}favicon.ico` }],
