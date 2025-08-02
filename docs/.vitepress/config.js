@@ -11,39 +11,48 @@ export default {
     ["link", { rel: "icon", href: `${base}favicon.ico` }],
     ['link', { rel: 'stylesheet', href: `${base}custom.css` }]
   ],
+  footer: {
+    message: "Released under the MIT License.",
+    copyright: "Copyright ©fishcoderman",
+  },
   themeConfig: {
     docFooter: {
       prev: "上一页",
       next: "下一页",
     },
+    socialLinks: [
+      { icon: 'github', link: 'https://github.com/fishcoderman'}
+    ],
+    search: {
+      provider: "local",
+    },
     nav: [
       {
         text: "前端",
         items: [
-          { text: "js", link: "/frontend/js/" },
-          { text: "react", link: "/frontend/react/" },
-          { text: "vue", link: "/frontend/vue/" },
+          { text: "JS", link: "/frontend/js/" },
+          { text: "React", link: "/frontend/react/" },
+          { text: "Vue", link: "/frontend/vue/" },
           { text: "工程化", link: "/frontend/structure/" },
-          { text: "算法", link: "/frontend/algorithm/" },
         ],
       },
       {
         text: "服务端",
         items: [
-          { text: "node", link: "/backend/node/" },
-          { text: "java", link: "/backend/java/" },
-          { text: "docker", link: "/backend/docker/" },
-          { text: "nginx", link: "/backend/nginx/" },
-          { text: "sql", link: "/backend/sql/" },
+          { text: "Node", link: "/backend/node/" },
+          { text: "Java", link: "/backend/java/" },
+          { text: "Docker", link: "/backend/docker/" },
+          { text: "Nginx", link: "/backend/nginx/" },
+          { text: "SQL", link: "/backend/sql/" },
         ],
+      },
+      {
+        text: "AI",
+        link: "/ai"
       },
       {
         text: "生活",
         link: "/life"
-      },
-      {
-        text: "关于",
-        link: "/about"
       },
     ],
     sidebar: {
@@ -57,9 +66,8 @@ export default {
       "/frontend/react/": {
         text: "react",
         items: [
-          { text: "react的router实现原理", link: "/frontend/react/react的router实现原理" },
-          { text: "html1", link: "/frontend/html/html1" },
-          { text: "html2", link: "frontend/html/html2" },
+          { text: "React的Router实现原理", link: "/frontend/react/React的Router实现原理" },
+          { text: "React和Vue渲染流程差异", link: "/frontend/react/React和Vue渲染流程差异" },
         ],
       },
       "/frontend/vue/": {
@@ -76,6 +84,7 @@ export default {
           { text: "webpack模块化打包原理", link: "/frontend/structure/webpack模块化打包原理" },
           { text: "安装arm架构的Node", link: "/frontend/structure/mac安装Node" },
           { text: "移动端主题切换", link: "/frontend/structure/移动端主题切换" },
+          { text: "legacy-peer-deps", link: "/frontend/structure/legacy-peer-deps" },
         ],
       },
       "/frontend/algorithm/": {
@@ -86,16 +95,16 @@ export default {
           { text: "移动端主题切换", link: "/frontend/structure/移动端主题切换" },
         ],
       },
+      "/ai/": {
+        text: "AI",
+        items: [
+          { text: "大模型原理", link: "/ai/大模型原理" },
+        ],
+      },
     },
   },
   outline: {
     label: '页面导航'
-  }, lastUpdated: {
-    text: '最后更新于',
-    formatOptions: {
-      dateStyle: 'short',
-      timeStyle: 'medium'
-    }
   },
   langMenuLabel: '多语言',
   returnToTopLabel: '回到顶部',

@@ -1,3 +1,15 @@
-.container .text {
-  font-size: 24px;
+
+/* 修改导航栏字体大小 */
+.VPNav .VPNavBar .VPNavBarMenu .VPNavBarMenuGroup .VPNavBarMenuGroupButton {
+  font-size: 16px; /* 调整导航栏下拉菜单按钮的字体大小 */
+}
+
+/* 修改导航栏链接字体大小 */
+.VPNav .VPNavBar .VPNavBarMenu .VPNavBarMenuLink {
+  font-size: 16px; /* 调整导航栏直接链接的字体大小 */
+}
+
+/* 修改导航栏下拉菜单项字体大小 */
+.VPNavBarMenuGroup .VPNavBarMenuGroupItem .VPLink {
+  font-size: 16px; /* 调整下拉菜单项的字体大小 */
 }
