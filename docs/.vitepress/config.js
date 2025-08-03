@@ -60,7 +60,7 @@ export default {
       "/frontend/js/": {
         text: "js",
         items: [
-          {text: "Web性能优化",  link: "/frontend/js/Web性能优化" },
+          {text: "Web性能优化",  link: "/frontend/js/Web性能优化概览" },
           { text: "事件循环", link: "/frontend/js/事件循环" },
           { text: "js类型转化", link: "/frontend/js/js类型转化" },
           { text: "手写Promise", link: "/frontend/js/手写Promise" },
