@@ -71,7 +71,3 @@
 | 适用场景 | 单实例应用 | 多实例应用 | 低版本浏览器 |
 
 qiankun默认推荐使用`ProxySandbox`，它提供了最好的隔离效果和性能，适合大多数现代浏览器环境。只有在特殊场景下才需要考虑其他两种沙箱实现。
-
----
-
-*原文来源：[GitHub Issue #90](https://github.com/fishcoderman/fishcoderman.github.io/issues/90)*

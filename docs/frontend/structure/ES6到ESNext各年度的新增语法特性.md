@@ -112,7 +112,3 @@ JavaScript 的重大更新，引入了现代编程的核心特性。新增语法
 | ESNext | 装饰器、Record & Tuple（提案中） |
 
 建议根据目标运行环境选择支持的版本（可通过 [Can I Use](https://caniuse.com/) 检查兼容性）。
-
----
-
-*原文来源：[GitHub Issue #83](https://github.com/fishcoderman/fishcoderman.github.io/issues/83)*

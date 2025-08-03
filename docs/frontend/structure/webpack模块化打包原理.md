@@ -5,278 +5,7 @@
 :::
 
 ## 前置准备
-
 webpack不同版本模块化打包的代码都不一样，但是核心原理都一样。为了防止出现我可以，你不可以的情况，我们先统一配置webpack版本：
-
-```json
-{
-  "name": "practice",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "start": "npx webpack"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "webpack": "^5.91.0",
-    "webpack-cli": "^5.1.4"
-  }
-}
-```
-
-项目目录结构：
-
-```
-├── node_modules
-├── package-lock.json
-├── package.json
-├── src
-│   ├── deep.js
-│   ├── index.js
-│   ├── job.js
-│   ├── play.js
-│   └── run.js
-├── webpack.config.js
-```
-
-其中src底下各个文件的代码：
-
-```javascript
-// index.js
-import { run } from "./run.js"
-import play from "./play.js"
-const deep = require('./deep.js')
-
-console.info('run---', run())
-console.info('play---', play())
-console.log("deep---", deep);
-
-// run.js 为export导出
-export const run = () => "this is run";
-
-// play.js 为 export default 导出
-export default () => {
-  return "this is play"
-};
-
-// deep.js 为CommonJS 的 module.exports 导出
-const deep = "this is deep";
-module.exports = deep;
-```
-
-webpack.config.js 的代码为：
-
-```javascript
-const path = require('path');
-
-module.exports = {
-  entry: './src/index.js',
-  output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'entry.js',
-    clean: true
-  },
-  mode: "development"
-};
-```
-
-## 模块化分析
-
-执行 `npx webpack` 打包得到的 dist 目录底下的 entry.js 为：
-
-```javascript
-// 该文件为删除注释等，精简之后的结果
-(() => { // webpackBootstrap
-  var __webpack_modules__ = ({
-    "./src/deep.js":
-      ((module) => {
-        eval("const deep = \"this is deep\";
-
-module.exports = deep;
-
-//# sourceURL=webpack://practice/./src/deep.js?");
-      }),
-    "./src/index.js":
-      ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-        "use strict";
-        __webpack_require__.r(__webpack_exports__);
-        var _run_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("./src/run.js");
-        var _play_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("./src/play.js");
-        const deep = __webpack_require__("./src/deep.js");
-        console.info('run---', (0, _run_js__WEBPACK_IMPORTED_MODULE_0__.run)());
-        console.info('play---', (0, _play_js__WEBPACK_IMPORTED_MODULE_1__["default"])());
-        console.log("deep---", deep);
-        console.log("__webpack_module_cache__", __webpack_module_cache__);
-        //# sourceURL=webpack://practice/./src/index.js?
-      }),
-    "./src/play.js":
-      ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-        "use strict";
-        __webpack_require__.r(__webpack_exports__);
-        __webpack_require__.d(__webpack_exports__, {
-          "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-        });
-        /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (() => {
-          return "this is play"
-        });
-        //# sourceURL=webpack://practice/./src/play.js?
-      }),
-    "./src/run.js":
-      ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-        "use strict";
-        __webpack_require__.r(__webpack_exports__);
-        __webpack_require__.d(__webpack_exports__, {
-          run: () => (/* binding */ run)
-        });
-        const run = () => "this is run";
-        //# sourceURL=webpack://practice/./src/run.js?
-      })
-  });
-  
-  // The module cache
-  var __webpack_module_cache__ = {};
-
-  // The require function
-  function __webpack_require__(moduleId) {
-    // Check if module is in cache
-    var cachedModule = __webpack_module_cache__[moduleId];
-    if (cachedModule !== undefined) {
-      return cachedModule.exports;
-    }
-    // Create a new module (and put it into the cache)
-    var module = __webpack_module_cache__[moduleId] = {
-      exports: {}
-    };
-    // Execute the module function
-    __webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-    // Return the exports of the module
-    return module.exports;
-  }
-
-  // webpack/runtime/define property getters
-  __webpack_require__.d = (exports, definition) => {
-    for (var key in definition) {
-      if (__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-        Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-      }
-    }
-  };
-
-  // webpack/runtime/hasOwnProperty shorthand
-  __webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop));
-
-  // webpack/runtime/make namespace object
-  __webpack_require__.r = (exports) => {
-    if (typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-      Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-    }
-    Object.defineProperty(exports, '__esModule', { value: true });
-  };
-  
-  // 代码入口
-  var __webpack_exports__ = __webpack_require__("./src/index.js");
-})();
-```
-
-以上代码中，webpack通过 `__webpack_require__` 函数模拟了模块的加载，把定义的模块内容通过 `Object.defineProperty` 挂载到 `module.exports` 上。同时 `__webpack_module_cache__` 缓存了所有的模块代码，二次加载的时候直接从缓存中获取，所以模块中的代码即使被引入多次，也只会执行第一次。
-
-通过打印 `__webpack_module_cache__` 可以得到如下的伪代码：
-
-```javascript
-// console.log("__webpack_module_cache__", __webpack_module_cache__);
-{
-  "./src/index.js": {"exports": {}}, 
-  "./src/run.js": {exports: { run: () => "this is run" }}, // export 
-  "./src/play.js": {exports: { default: () => { return "this is play" } }}, // export default
-  "./src/deep.js": {exports: "this is deep"} // CommonJS
-}
-```
-
-其中：
-- `export default` 的时候会手动添加一个 `default` 属性
-- `export` 返回对应的属性
-- `CommonJS` 直接返回结果
-
-## Import 懒加载
-
-更改 index.js 为：
-
-```javascript
-function component() {
-  const btn = document.createElement('button');
-  btn.onclick = () => {
-    import('./play.js').then((res) => {
-      console.log('动态加载play.js..', res);
-    });
-  };
-  btn.innerHTML = 'Button';
-  return btn;
-}
-document.body.appendChild(component());
-```
-
-执行 `npx webpack` 打包得到的 dist 目录为：
-
-```
-├── dist
-│   ├── entry.js
-│   └── src_play_js.entry.js
-```
-
-其中 `src_play_js.entry.js` 为：
-
-```javascript
-(self["webpackChunkpractice"] = self["webpackChunkpractice"] || []).push(["src_play_js",{
-  "./src/play.js": ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-    eval("__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (() => {
-  return "this is play"
-});
-
-//# sourceURL=webpack://practice/./src/play.js?");
-  })
-}]);
-```
-
-`self["webpackChunkpractice"]` 是webpack全局注入的一个对象，在调用push方法的时候，entry.js 中包含了完整的懒加载机制：
-
-### 懒加载实现流程
-
-从源码可以知道，webpack实现模块的异步加载有点像jsonp的流程。在主js文件中通过在head中构建script标签方式，异步加载模块信息，过程中调用 `self["webpackChunkpractice"]` 的push方法，调用了回调函数 `webpackJsonpCallback`，把异步的模块的源码同步到主文件中，所以后续操作异步模块可以像同步模块一样。
-
-源码具体实现流程：
-
-1. **遇到异步模块时**，使用 `__webpack_require__.e` 函数去把异步代码加载进来。该函数会在html的head中动态增加script标签，src指向指定的异步模块存放的文件。
-
-2. **加载的异步模块文件**会执行 `webpackJsonpCallback` 函数，把异步模块加载到主文件中。
-
-3. **所以后续可以像同步模块一样**，直接使用 `__webpack_require__("./src/async.js")` 加载异步模块。注意源码中的promise使用非常精妙，主模块加载完成异步模块才resolve()。
-
-## 总结
-
-1. **webpack对于ES模块/CommonJS模块的实现**，是基于自己实现的 `__webpack_require__`，所以代码能跑在浏览器中。
-
-2. **从 webpack2 开始**，已经内置了对 ES6、CommonJS、AMD 模块化语句的支持。但不包括新的ES6语法转为ES5代码，这部分工作还是留给了babel及其插件。
-
-3. **在webpack中可以同时使用ES6模块和CommonJS模块**。因为 `module.exports` 很像 `export default`，所以ES6模块可以很方便兼容 CommonJS：`import XXX from 'commonjs-module'`。反过来CommonJS兼容ES6模块，需要额外加上default：`require('es-module').default`。
-
-4. **webpack异步加载模块实现流程跟jsonp基本一致**。
-
----
-
-*原文来源：[GitHub Issue #43](https://github.com/fishcoderman/fishcoderman.github.io/issues/43)*
-
-在使用 webpack 的过程中，你是否好奇 webpack 打包的代码为什么可以直接在浏览器中跑？为什么 webpack 可以支持 CommonJS 、UMD 、ES6 Module 等语法。以及 Webpack 中懒加载的原理是什么？
-
-## 前置准备
-
-webpack 不同版本模块化打包的代码都不一样，但是核心原理都一样。为了防止出现我可以，你不可以的情况，我们先统一配置 webpack 版本：
 
 ```
 {
@@ -298,7 +27,6 @@ webpack 不同版本模块化打包的代码都不一样，但是核心原理都
 ```
 
 项目目录结构
-
 ```
 ├── node_modules
 ├── package-lock.json
@@ -312,7 +40,7 @@ webpack 不同版本模块化打包的代码都不一样，但是核心原理都
 ├── webpack.config.js
 ```
 
-其中 src 底下各个文件的代码：
+其中src底下各个文件的代码：
 
 ```
 // index.s
@@ -351,9 +79,9 @@ module.exports = {
 
 ## 模块化分析
 
-执行 npx webpack 打包得到的 dist 目录 底下的 enty.js 为：
+执行 npx webpack 打包得到的  dist 目录 底下的  enty.js 为： 
 
-```
+```js
 // 该文件为删除注释等，精简之后的结果
 (() => { // webpackBootstrap
   var __webpack_modules__ = ({
@@ -455,13 +183,13 @@ module.exports = {
 })();
 ```
 
-以上代码中，webpack 通过**webpack_require** 函数模拟了模块的加载，把定义的模块内容通过 Object.defineProperty 挂载到 module.exports 上。同时**webpack_module_cache**缓存了所有的模块代码，二次加载的时候直接从缓存中获取，所以模块中的代码即使被引入多次，也只会执行第一次。通过打印**webpack_module_cache**可以得到如下的伪代码：
+以上代码中，webpack通过__webpack_require__ 函数模拟了模块的加载，把定义的模块内容通过Object.defineProperty挂载到module.exports上。同时__webpack_module_cache__缓存了所有的模块代码，二次加载的时候直接从缓存中获取，所以模块中的代码即使被引入多次，也只会执行第一次。通过打印__webpack_module_cache__可以得到如下的伪代码：
 
-```
+```js
 // console.log("__webpack_module_cache__", __webpack_module_cache__);
  {
-     "./src/index.js":{"exports":  {}}, //
-     "./src/run.js":{exports: { run: () => "this is run" }}, // export
+     "./src/index.js":{"exports":  {}}, // 
+     "./src/run.js":{exports: { run: () => "this is run" }}, // export 
      "./src/play.js":{exports:{ default: () => { return "this is play" } }}, // export default
      "./src/deep.js":{exports: "this is deep"} // CommonJS
  }
@@ -473,7 +201,7 @@ module.exports = {
 
 更改 index.js 为：
 
-```
+```js
 function component() {
   const btn = document.createElement('button');
   btn.onclick = () => {
@@ -487,9 +215,9 @@ function component() {
 document.body.appendChild(component());
 ```
 
-执行 npx webpack 打包得到的 dist ，目录为：
+执行 npx webpack 打包得到的  dist ，目录为：
 
-```
+```js
 ├── dist
 │   ├── entry.js
 │   └── src_play_js.entry.js
@@ -497,7 +225,7 @@ document.body.appendChild(component());
 
 其中 src_play_js.entry.js 为 ：
 
-```
+```js
 (self["webpackChunkpractice"] = self["webpackChunkpractice"] || []).push([["src_play_js"],{
 
 /***/ "./src/play.js":
@@ -512,8 +240,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 
 }]);
 ```
-
-self["webpackChunkpractice"] 是 webpack 全局注入的一个对象，在调用 push 方法的时候,entry.js 为：
+self["webpackChunkpractice"] 是webpack全局注入的一个对象，在调用push方法的时候,entry.js 为：
 
 ```
 (() => { // webpackBootstrap
@@ -798,15 +525,18 @@ self["webpackChunkpractice"] 是 webpack 全局注入的一个对象，在调用
   ;
 ```
 
-从上面源码可以知道，webpack 实现模块的异步加载有点像 jsonp 的流程。在主 js 文件中通过在 head 中构建 script 标签方式，异步加载模块信息，过程中调用 self["webpackChunkpractice"]的 push 方法，调用了回调函数 webpackJsonpCallback，把异步的模块的源码同步到主文件中，所以后续操作异步模块可以像同步模块一样。
-源码具体实现流程：
+从上面源码可以知道，webpack实现模块的异步加载有点像jsonp的流程。在主js文件中通过在head中构建script标签方式，异步加载模块信息，过程中调用self["webpackChunkpractice"]的push方法，调用了回调函数webpackJsonpCallback，把异步的模块的源码同步到主文件中，所以后续操作异步模块可以像同步模块一样。
 
-1. 遇到异步模块时，使用 webpack_require.e 函数去把异步代码加载进来。该函数会在 html 的 head 中动态增加 script 标签，src 指向指定的异步模块存放的文件。
-2. 加载的异步模块文件会执行 webpackJsonpCallback 函数，把异步模块加载到主文件中。
-3. 所以后续可以像同步模块一样,直接使用 webpack_require("./src/async.js")加载异步模块。
-   注意源码中的 promise 使用非常精妙，主模块加载完成异步模块才 resolve();
-   总结
-4. webpack 对于 ES 模块/CommonJS 模块的实现，是基于自己实现的 webpack_require，所以代码能跑在浏览器中。
-5. 从 webpack2 开始，已经内置了对 ES6、CommonJS、AMD 模块化语句的支持。但不包括新的 ES6 语法转为 ES5 代码，这部分工作还是留给了 babel 及其插件。
-6. 在 webpack 中可以同时使用 ES6 模块和 CommonJS 模块。因为 module.exports 很像 export default，所以 ES6 模块可以很方便兼容 CommonJS：import XXX from 'commonjs-module'。反过来 CommonJS 兼容 ES6 模块，需要额外加上 default：require('es-module').default。
-7. webpack 异步加载模块实现流程跟 jsonp 基本一致。
+**源码具体实现流程：**
+
+1. 遇到异步模块时，使用webpack_require.e函数去把异步代码加载进来。该函数会在html的head中动态增加script标签，src指向指定的异步模块存放的文件。
+2. 加载的异步模块文件会执行webpackJsonpCallback函数，把异步模块加载到主文件中。
+3. 所以后续可以像同步模块一样,直接使用webpack_require("./src/async.js")加载异步模块。
+ 注意源码中的promise使用非常精妙，主模块加载完成异步模块才resolve();
+
+## 总结
+
+1. webpack对于ES模块/CommonJS模块的实现，是基于自己实现的webpack_require，所以代码能跑在浏览器中。
+2. 从 webpack2 开始，已经内置了对 ES6、CommonJS、AMD 模块化语句的支持。但不包括新的ES6语法转为ES5代码，这部分工作还是留给了babel及其插件。
+3. 在webpack中可以同时使用ES6模块和CommonJS模块。因为 module.exports很像export default，所以ES6模块可以很方便兼容 CommonJS：import XXX from 'commonjs-module'。反过来CommonJS兼容ES6模块，需要额外加上default：require('es-module').default。
+4. webpack异步加载模块实现流程跟jsonp基本一致。

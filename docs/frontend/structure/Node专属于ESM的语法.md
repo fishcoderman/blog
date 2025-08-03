@@ -135,7 +135,3 @@ ESM 中以下 CommonJS 变量不存在：
 • 需要 `import.meta` 或顶层 `await` 等特性。
 
 如果需要兼容旧版 Node.js，可以通过 `package.json` 的 "type": "module" 或 `.mjs` 扩展名显式启用 ESM。
-
----
-
-*原文来源：[GitHub Issue #84](https://github.com/fishcoderman/fishcoderman.github.io/issues/84)*

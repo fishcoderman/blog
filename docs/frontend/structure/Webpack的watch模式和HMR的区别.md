@@ -209,6 +209,3 @@ if (module.hot) {
 - 👉 如果你只是想监听文件变更，使用 **watch**
 - 👉 如果你是前端开发（React/Vue），使用 **HMR**，体验更流畅！ 🎉
 
----
-
-*原文来源：[GitHub Issue #70](https://github.com/fishcoderman/fishcoderman.github.io/issues/70)*

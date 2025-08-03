@@ -1,4 +1,4 @@
-# react的router实现原理
+# React的router实现原理
 
 react的router分为hash 模式 和 history 模式
 

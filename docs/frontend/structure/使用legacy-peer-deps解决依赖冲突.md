@@ -121,6 +121,3 @@ npm install react@18.2.0
 | **安装多个冲突依赖版本** | 使用 pnpm，它支持多版本共存（软链接隔离） |
 | **用 --legacy-peer-deps** | 临时绕过冲突，不建议长期依赖 |
 
----
-
-*原文来源：[GitHub Issue #91](https://github.com/fishcoderman/fishcoderman.github.io/issues/91)*

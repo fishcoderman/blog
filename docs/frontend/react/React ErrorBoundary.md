@@ -224,7 +224,3 @@ render() {
 - **为用户提供友好的错误反馈和恢复选项**
 
 通过合理使用ErrorBoundary和其他错误处理机制，可以大大提升React应用的稳定性和用户体验！
-
----
-
-*原文来源：[GitHub Issue #68](https://github.com/fishcoderman/fishcoderman.github.io/issues/68)*
