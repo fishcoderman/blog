@@ -34,7 +34,7 @@ export default {
         items: [
           { text: "JS", link: "/frontend/js/" },
           { text: "React", link: "/frontend/react/" },
-          { text: "Vue", link: "/frontend/vue/" },
+          { text: "Vue", link: "https://segmentfault.com/u/chinamasters/articles" },
           { text: "工程化", link: "/frontend/structure/" },
           { text: "Flutter", link: "/frontend/flutter/" },
         ],
