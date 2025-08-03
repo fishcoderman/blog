@@ -60,7 +60,7 @@ export default {
       "/frontend/js/": {
         text: "js",
         items: [
-          {text: "web性能优化",  link: "/frontend/js/web性能优化" },
+          {text: "Web性能优化",  link: "/frontend/js/Web性能优化" },
           { text: "事件循环", link: "/frontend/js/事件循环" },
           { text: "js类型转化", link: "/frontend/js/js类型转化" },
           { text: "手写Promise", link: "/frontend/js/手写Promise" },
@@ -91,8 +91,8 @@ export default {
       "/frontend/react/": {
         text: "react",
         items: [
-          { text: "React的Router实现原理", link: "/frontend/react/React的Router实现原理" },
           { text: "React和Vue渲染流程差异", link: "/frontend/react/React和Vue渲染流程差异" },
+          { text: "React的Router实现原理", link: "/frontend/react/React的Router实现原理" },
           { text: "React ErrorBoundary", link: "/frontend/react/React ErrorBoundary" },
           { text: "React事件池", link: "/frontend/react/React事件池" },
           { text: "React源码中flags按位运算", link: "/frontend/react/React源码中flags按位运算" },
