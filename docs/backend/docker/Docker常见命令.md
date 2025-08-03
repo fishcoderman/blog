@@ -1,8 +1,8 @@
 # Docker常见命令
 
-docker 操作
+### docker 操作
 
-```js
+```bash
 从docker库中下载镜像：
 > docker pull tomcat
 
