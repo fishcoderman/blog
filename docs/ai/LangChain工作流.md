@@ -1,5 +1,9 @@
 # LangChain工作流案例
 
+LangChain有js和python版，目前这边使用python版。
+
+## 安装引入依赖
+
 ```python
 import os
 from langchain_openai import ChatOpenAI

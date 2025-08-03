@@ -4,6 +4,10 @@
 记录关于 Java 相关的文章和知识点。
 :::
 
+## 学习
+
+[java的学习路线](https://www.bilibili.com/opus/494817843530680807)
+
 ## 目录
 
 - [SpringBoot结合Axios实现前后端请求](./SpringBoot结合Axios实现前后端请求.md)

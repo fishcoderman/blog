@@ -167,8 +167,12 @@ export default {
         text: "AI",
         items: [
           { text: "大模型原理", link: "/ai/大模型原理" },
-          { text: "LangChain工作流", link: "/ai/LangChain工作流" },
           { text: "DeepSeek构建本地知识库", link: "/ai/DeepSeek构建本地知识库" },
+          { text: "LangChain工作流", link: "/ai/LangChain工作流" },
+          { text: "LangChain接入MCP完整实现流程", link: "/ai/LangChain接入MCP完整实现流程" },
+          { text: "LangChain实现本地知识库问答", link: "/ai/LangChain实现本地知识库问答" },
+          { text: "LangGraph", link: "/ai/LangGraph" },
+          { text: "Dify私有化部署", link: "/ai/Dify私有化部署" },
         ],
       },
       "/life/": {
