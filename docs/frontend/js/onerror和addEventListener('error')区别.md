@@ -1,3 +1,4 @@
+# onerror和addEventListener('error')区别
 在某些情况下 window.onerror 和 addEventListener('error') 会出现重叠捕获。通过代码示例来说明：
 
 ```js

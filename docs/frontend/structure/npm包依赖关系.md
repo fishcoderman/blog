@@ -1,3 +1,5 @@
+# npm包依赖关系
+
 在 Node.js 项目中，查看 npm 包之间的依赖关系有多种方法。以下是几种常用的方法和工具：
 
 ### 1. 使用 `npm ls` 命令
@@ -37,7 +39,7 @@ npm install -g npm-graph
 npmgraph
 ```
 
-你也可以将其输出为图片或交互式图形界面，具体可参考 [npm-graph 的 GitHub 仓库](https://github.com/sverweij/npm-graph)。
+也可以将其输出为图片或交互式图形界面，具体可参考 [npm-graph 的 GitHub 仓库](https://github.com/sverweij/npm-graph)。
 
 ### 3. 使用 `dependency-cruiser` 工具
 
@@ -55,7 +57,7 @@ depcruise --output-type dot src | dot -T svg > dependency-graph.svg
 上述命令将生成一个 SVG 格式的依赖关系图文件 `dependency-graph.svg`。
 
 **查看依赖关系图：**
-你可以使用浏览器或其他支持 SVG 格式的工具打开生成的 `dependency-graph.svg` 文件。
+可以使用浏览器或其他支持 SVG 格式的工具打开生成的 `dependency-graph.svg` 文件。
 
 ### 4. 使用在线工具或 IDE 插件
 
@@ -66,7 +68,7 @@ depcruise --output-type dot src | dot -T svg > dependency-graph.svg
 
 ### 5. 查看 `package-lock.json` 或 `yarn.lock`
 
-这些锁定文件详细记录了每个包的具体版本及其依赖关系。你可以手动查看这些文件，或者使用上述工具来解析和可视化它们。
+这些锁定文件详细记录了每个包的具体版本及其依赖关系。可以手动查看这些文件，或者使用上述工具来解析和可视化它们。
 
 **示例：查看 `package-lock.json` 中某个包的依赖**
 ```json
@@ -95,7 +97,7 @@ depcruise --output-type dot src | dot -T svg > dependency-graph.svg
 
 ### 6. 使用 `yarn` 的依赖分析工具（如果使用 Yarn）
 
-如果你使用的是 Yarn，可以利用其内置的命令和插件来查看依赖关系。
+如果使用的是 Yarn，可以利用其内置的命令和插件来查看依赖关系。
 
 **查看依赖树：**
 ```bash
@@ -104,7 +106,3 @@ yarn list --pattern <package-name>
 
 **使用 `yarn-plugin-interactive-tools` 进行可视化：**
 安装并使用 Yarn 的交互式工具来分析和查看依赖关系。
-
-### 总结
-
-根据你的需求和习惯，可以选择命令行工具如 `npm ls`，图形化工具如 `dependency-cruiser`，或者集成开发环境中的插件来查看和管理 npm 包之间的依赖关系。这些工具和方法能够帮助你更好地理解项目结构，避免潜在的版本冲突，并优化项目的依赖配置。

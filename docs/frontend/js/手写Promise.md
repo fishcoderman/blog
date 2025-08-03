@@ -1,6 +1,41 @@
 # 手写Promise
+
+## Promises/A+ 介绍
+
+[Promises/A+](https://promisesaplus.com/) 是 JavaScript Promise 的一个开放标准。ES6 中的 Promise 就是符合这一规范的，Promises/A+ 提供对所有细节的定义。
+
+#### Promise 简单使用
+
 ```js
-// 模拟 resolve 和 reject传入逻辑
+new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve(1);
+  }, 1000);
+})
+  .then((res) => {
+    console.log(res);
+    //then回调中可以return一个Promise
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(2);
+      }, 1000);
+    });
+  })
+  .then((res) => {
+    console.log(res);
+    //then回调中也可以return一个值
+    return 3;
+  })
+  .then((res) => {
+    console.log(res);
+  });
+```
+
+## Promise 实现
+
+### 模拟 resolve 和 reject 传入逻辑
+
+```js
 function test() {
   function run(a, b) {
     setTimeout(() => {
@@ -20,30 +55,12 @@ function test() {
   );
 }
 test();
-// new Promise((resolve, reject) => {
-//   setTimeout(() => {
-//     resolve(1);
-//   }, 1000);
-// })
-//   .then((res) => {
-//     console.log(res);
-//     //then回调中可以return一个Promise
-//     return new Promise((resolve, reject) => {
-//       setTimeout(() => {
-//         resolve(2);
-//       }, 1000);
-//     });
-//   })
-//   .then((res) => {
-//     console.log(res);
-//     //then回调中也可以return一个值
-//     return 3;
-//   })
-//   .then((res) => {
-//     console.log(res);
-//   });
+```
 
-//Promise/A+规定的三种状态
+### 创建 MyPromise 类实现 Promise
+
+```js
+// Promise/A+规定的三种状态
 const PENDING = 'pending';
 const FULFILLED = 'fulfilled';
 const REJECTED = 'rejected';
@@ -174,7 +191,7 @@ class MyPromise {
     let result = [];
     return new MyPromise((resolve, reject) => {
       promiseArr.forEach((p, i) => {
-        //Promise.resolve(p)用于处理传入值不为Promise的情况
+        // Promise.resolve(p)用于处理传入值不为Promise的情况
         MyPromise.resolve(p).then(
           (val) => {
             index++;
@@ -209,7 +226,5 @@ class MyPromise {
     });
   }
 }
-
-
 
 ```

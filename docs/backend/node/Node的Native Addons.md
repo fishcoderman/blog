@@ -11,7 +11,7 @@
 
 Node 本地模块通过 **Node-API**（以前称为 **N-API**）或 **nan（Native Abstractions for Node.js）** 等抽象层与 Node.js 进行交互。这些抽象层提供了一组稳定的 C 接口，使得本地模块能够与不同版本的 Node.js 兼容。
 
-当你在 JavaScript 中使用 `require('./myaddon.node')` 时，Node.js 会：
+当在 JavaScript 中使用 `require('./myaddon.node')` 时，Node.js 会：
 
 1. **加载二进制文件**：读取并加载 `.node` 文件到内存中。
 2. **初始化模块**：调用模块的初始化函数，注册导出的函数和对象。
@@ -23,7 +23,7 @@ Node 本地模块通过 **Node-API**（以前称为 **N-API**）或 **nan（Nati
 
 #### a. 环境准备
 
-确保你已经安装了以下工具：
+确保已经安装了以下工具：
 
 • **Node.js** 和 **npm**
 • **Python**（通常需要版本 2.7 或 3.x，具体取决于 `node-gyp` 的要求）
@@ -142,7 +142,7 @@ console.log(addon.hello()); // 输出: Hello from C++!
 node index.js
 ```
 
-你应该会看到输出：
+应该会看到输出：
 
 ```
 Hello from C++!
@@ -421,4 +421,4 @@ Sum: 30
   • [Node Addons with N-API](https://github.com/nodejs/node-addon-api/tree/main/doc/tutorial)
   • [Writing Node.js Addons with C++](https://www.rust-lang.org/what/native-tls#writing-node-js-addons-with-c)
 
-通过学习和实践，你可以掌握如何编写高效的 Node 本地模块，扩展 Node.js 的功能以满足特定需求。
+通过学习和实践，可以掌握如何编写高效的 Node 本地模块，扩展 Node.js 的功能以满足特定需求。

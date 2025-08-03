@@ -1,3 +1,5 @@
+# 发布订阅addEventListener
+
 window.addEventListener 是基于发布订阅模式实现的，同一个事件可以添加多个监听器。解释一下关键点：
 
 1. **多次声明示例**
