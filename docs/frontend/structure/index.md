@@ -6,8 +6,8 @@
 
 ## 目录
 
+- [手写qiankun](./手写qiankun.md)
 - [npm --legacy-peer-deps 详解](./legacy-peer-deps.md)
-- [使用legacy-peer-deps解决依赖冲突](./使用legacy-peer-deps解决依赖冲突.md)
 - [前端并发请求控制](./前端并发请求控制.md)
 - [移动端主题切换](./移动端主题切换.md)
 - [mac安装Node](./mac安装Node.md)

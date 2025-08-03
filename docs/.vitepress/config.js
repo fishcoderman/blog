@@ -95,7 +95,7 @@ export default {
           { text: "React和Vue渲染流程差异", link: "/frontend/react/React和Vue渲染流程差异" },
           { text: "React ErrorBoundary", link: "/frontend/react/React ErrorBoundary" },
           { text: "React事件池", link: "/frontend/react/React事件池" },
-          { text: "React源码中 flags 按位运算符处理逻辑", link: "/frontend/react/React源码中 flags 按位运算符处理逻辑" },
+          { text: "React源码中flags按位运算", link: "/frontend/react/React源码中flags按位运算" },
           { text: "React点击指定dom以外的位置", link: "/frontend/react/React点击指定dom以外的位置" },
         ],
       },
@@ -117,7 +117,6 @@ export default {
           { text: "qiankun中三种沙箱的差异", link: "/frontend/structure/qiankun中三种沙箱的差异" },
           { text: "qiankun的CSS样式隔离", link: "/frontend/structure/qiankun的CSS样式隔离" },
           { text: "前端并发请求控制", link: "/frontend/structure/前端并发请求控制" },
-          { text: "使用legacy-peer-deps解决依赖冲突", link: "/frontend/structure/使用legacy-peer-deps解决依赖冲突" },
           { text: "如何真机调试", link: "/frontend/structure/如何真机调试" },
           { text: "webpack的runtimeChunk含义及其使用", link: "/frontend/structure/webpack的runtimeChunk含义及其使用" },
           { text: "webpack_public_path动态设置", link: "/frontend/structure/webpack_public_path动态设置" },
@@ -163,12 +162,15 @@ export default {
           { text: "Docker创建并MySQL容器", link: "/backend/docker/Docker创建并MySQL容器" },
           { text: "Nginx设置请求和响应头", link: "/backend/docker/Nginx设置请求和响应头" },
           { text: "Linux常见命令行操作", link: "/backend/docker/Linux常见命令行操作" },
+          { text: "Docker常见命令", link: "/backend/docker/Docker常见命令" },
         ],
       },
       "/ai/": {
         text: "AI",
         items: [
           { text: "大模型原理", link: "/ai/大模型原理" },
+          { text: "LangChain工作流", link: "/ai/LangChain工作流" },
+          { text: "DeepSeek构建本地知识库", link: "/ai/DeepSeek构建本地知识库" },
         ],
       },
       "/life/": {

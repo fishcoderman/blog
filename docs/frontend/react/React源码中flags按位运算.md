@@ -1,3 +1,4 @@
+# React源码中flags按位运算
 按位运算符可以对整数进行二进制处理，这对于处理一组二进制标记非常有用。以下是一些常见的按位运算符：
 
 - 与(&)
@@ -8,14 +9,14 @@
 - 有符号右移(>>)
 - 无符号右移(>>>)
 
-1.使用按位与操作符(&)来检查是否设置了特定的位。
+### 1.使用按位与操作符(&)来检查是否设置了特定的位。
 
 ```js
 //  flags是否包含flag
 const isFlagSet = (flags, flag) => (flags & flag) === flag;
 ```
 
-2.使用按位或操作符(|)来设置或清除特定的位。
+### 2.使用按位或操作符(|)来设置或清除特定的位。
 
 ```js
 // flags中设置flag
@@ -27,13 +28,13 @@ const toggleFlag = (flags, flag) => isFlagSet(flags, flag) ? clearFlag(flags, fl
 
 ```
 
-3.使用按位非操作符(~)来清除所有设置的位。
+### 3.使用按位非操作符(~)来清除所有设置的位。
 
 ```js
 const clearAllFlags = (flags) => ~flags;
 ```
 
-4.使用按位异或操作符(^)来切换特定的位。
+### 4.使用按位异或操作符(^)来切换特定的位。
 
 ```js
 const toggleFlag = (flags, flag) => flags ^ flag;
