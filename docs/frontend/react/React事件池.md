@@ -173,7 +173,6 @@ for (let i = 0; i < 100; i++) {
 
 ### 事件池的主要优势
 
-
 1. **减少内存分配**
 ```javascript
 // 不使用事件池
@@ -190,7 +189,7 @@ for (let i = 0; i < 1000; i++) {
 }
 ```
 
-2. **减少垃圾回收**
+1. **减少垃圾回收**
 ```javascript
 class EventPool {
   constructor() {
@@ -202,7 +201,7 @@ class EventPool {
 }
 ```
 
-3. **性能监控**
+1. **性能监控**
 ```javascript
 class EventPool {
   constructor() {

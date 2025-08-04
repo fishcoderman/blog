@@ -91,9 +91,11 @@ export default {
       "/frontend/react/": {
         text: "react",
         items: [
+        { text: "React渲染更新流程概览", link: "/frontend/react/React渲染更新流程概览" },
           { text: "React和Vue渲染流程差异", link: "/frontend/react/React和Vue渲染流程差异" },
           { text: "React的Router实现原理", link: "/frontend/react/React的Router实现原理" },
-          { text: "React ErrorBoundary", link: "/frontend/react/React ErrorBoundary" },
+          { text: "React同步和异步渲染", link: "/frontend/react/React同步和异步渲染" },
+          { text: "React错误捕获", link: "/frontend/react/React错误捕获" },
           { text: "React事件池", link: "/frontend/react/React事件池" },
           { text: "React源码中flags按位运算", link: "/frontend/react/React源码中flags按位运算" },
           { text: "React点击指定dom以外的位置", link: "/frontend/react/React点击指定dom以外的位置" },
