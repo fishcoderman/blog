@@ -7,6 +7,7 @@
 ## 目录
 
 - [Web性能优化](./Web性能优化概览.md)
+- [http缓存和cdn缓存](./http缓存和cdn缓存.md)
 - [手写Promise](./手写Promise.md)
 - [常见错误拦截](./常见错误拦截.md)
 - [监控SDK设计](./监控SDK设计.md)
@@ -17,7 +18,6 @@
 - [DocumentFragment](./DocumentFragment.md)
 - [Web Component](./Web%20Component.md)
 - [getBoundingClientRec详解](./getBoundingClientRec详解.md)
-- [http缓存和cdn缓存](./http缓存和cdn缓存.md)
 - [事件循环](./事件循环.md)
 - [事件循环案例](./事件循环案例.md)
 - [js二叉树前序、中序、后序遍历](./js二叉树前序、中序、后序遍历.md)
