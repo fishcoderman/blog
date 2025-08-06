@@ -24,6 +24,7 @@
 - [js树搜索及列表转数结构](./js树搜索及列表转数结构.md)
 - [js类型转化](./js类型转化.md)
 - [js计算SHA-256](./js计算SHA-256.md)
+- [AbortController](./AbortController.md)
 - [trycatch](./trycatch.md)
 - [tsconfig.json编译选项](./tsconfig.json编译选项.md)
 - [onerror和addEventListener('error')区别](./onerror和addEventListener('error')区别.md)

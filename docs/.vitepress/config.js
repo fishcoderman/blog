@@ -68,6 +68,7 @@ export default {
           { text: "常见错误拦截", link: "/frontend/js/常见错误拦截" },
           { text: "js类型转化", link: "/frontend/js/js类型转化" },
           { text: "正则语法和案例", link: "/frontend/js/正则语法和案例" },
+          { text: 'AbortController', link: '/frontend/js/AbortController'},
           { text: "滚动吸顶的四种方式", link: "/frontend/js/滚动吸顶的四种方式" },
           { text: "事件循环实际案例", link: "/frontend/js/事件循环实际案例" },
           { text: "虚拟滚动", link: "/frontend/js/虚拟滚动" },
