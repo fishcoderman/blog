@@ -110,6 +110,8 @@ export default {
         text: "工程化",
         items: [
           { text: "手写qiankun", link: "/frontend/structure/手写qiankun" },
+          { text: "Babel配置最佳实践", link: "/frontend/structure/Babel配置最佳实践" },
+          { text: "组件库搭建指南", link: "/frontend/structure/组件库搭建指南" },
           { text: "webpack模块化打包原理", link: "/frontend/structure/webpack模块化打包原理" },
           { text: "安装arm架构的Node", link: "/frontend/structure/mac安装Node" },
           { text: "移动端主题切换", link: "/frontend/structure/移动端主题切换" },
@@ -122,9 +124,7 @@ export default {
           { text: "webpack的runtimeChunk含义及其使用", link: "/frontend/structure/webpack的runtimeChunk含义及其使用" },
           { text: "webpack_public_path动态设置", link: "/frontend/structure/webpack_public_path动态设置" },
           { text: "文件迁移保留git记录", link: "/frontend/structure/文件迁移保留git记录" },
-          { text: "@babel-preset-env的useBuiltIns属性", link: "/frontend/structure/@babel-preset-env的useBuiltIns属性" },
           { text: "Mermaid语法", link: "/frontend/structure/Mermaid语法" },
-          { text: "@rollup-plugin-babel的使用", link: "/frontend/structure/@rollup-plugin-babel的使用" },
           { text: 'Github Pages搭建博客', link: '/frontend/structure/Github Pages搭建博客' },
           { text: "npm包依赖关系", link: "/frontend/structure/npm包依赖关系" },
         ],

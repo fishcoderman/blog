@@ -13,7 +13,7 @@ qiankun 是由阿里巴巴团队开源的一款微前端框架，基于 Single-S
 ### 2.2 qiankun 加载流程
 
 qiankun总体的加载流程如下：
-![alt text](image.png)
+![alt text](images/image.png)
 
 ### 2.3 手写qiankun
 
@@ -565,7 +565,7 @@ async function executeScripts(scripts) {
 
 我们知道微应用的入口会被打包成umd格式，然后export出生命周期函数。通过构造 module 和 module.exports对象 ，并传入到 new Function，从而走到 CommonJS 中逻辑中。所以module.exports的就是微前端导出的生命周期函数。
 
-![alt text](image-1.png)
+![alt text](images/image-1.png)
 
 ```js
     // 获取微应用的生命周期函数
@@ -629,7 +629,7 @@ importHTML('./subApp/index.html')
 ```
 
 import-html-entry 通过fetch 代理请求微前端首页的html资源，然后exoport 出 template getExternalStyleSheets  execScripts 等方法，用来加载对应的资源。
-![alt text](image-2.png)
+![alt text](images/image-2.png)
 
 **资源加载主要内容：**
 
@@ -645,7 +645,7 @@ import "dynamic.css"
 4. import-html-entry  会注释js标签，通过fetch请求对应的js资源，最后通过execScripts执行。注意， execScripts 可以传入一个sandbox 沙箱对象。也就是js沙箱实现的关键逻辑。
 
 具体被加载的微应用dom结构如下：
-![alt text](image-3.png)
+![alt text](images/image-3.png)
 
 ::: warning
 如果子项目需要复用主项目的依赖，只需要给子项目 index.html 中公共依赖的 script 和 link 标签加上 ignore 属性（这是自定义的属性，非标准属性）。
@@ -659,7 +659,7 @@ import "dynamic.css"
 
 注意点：如下所示控制台中，微前端加载的js和html资源并不是在JS这个tab，而是在 Fecth/XHR。侧面验证了资源是通过fetch拦截处理。
 
-![alt text](image-4.png)
+![alt text](images/image-4.png)
 
 ### 4.2 JS沙箱隔离
 

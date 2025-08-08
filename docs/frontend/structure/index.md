@@ -7,8 +7,8 @@
 ## 目录
 
 - [手写qiankun](./手写qiankun.md)
-- [npm --legacy-peer-deps 详解](./legacy-peer-deps.md)
-- [前端并发请求控制](./前端并发请求控制.md)
+- [Babel配置最佳实践](./Babel配置最佳实践.md)
+- [组件库搭建指南](./Babel配置最佳实践.md)
 - [移动端主题切换](./移动端主题切换.md)
 - [mac安装Node](./mac安装Node.md)
 - [webpack模块化打包原理](./webpack模块化打包原理.md)
@@ -19,7 +19,7 @@
 - [webpack的runtimeChunk含义及其使用](./webpack的runtimeChunk含义及其使用.md)
 - [webpack_public_path动态设置](./webpack_public_path动态设置.md)
 - [文件迁移保留git记录](./文件迁移保留git记录.md)
-- [@babel-preset-env的useBuiltIns属性](./@babel-preset-env的useBuiltIns属性.md)
 - [Mermaid语法](./Mermaid语法.md)
 - [npm包依赖关系](./npm包依赖关系.md)
-- [@rollup-plugin-babel的使用](./@rollup-plugin-babel的使用.md)
+- [npm --legacy-peer-deps 详解](./legacy-peer-deps.md)
+- [前端并发请求控制](./前端并发请求控制.md)

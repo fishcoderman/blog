@@ -29,7 +29,7 @@ MDN上归纳为：Web性能是网站或应用程序的客观度量和可感知�
 
 ### RAIL性能模型
 
-![alt text](image.png)
+![alt text](./images/image.png)
 
 RAIL 是 Response, Animation, Idle, 和 Load 的首字母缩写, 是一种由 Google Chrome 团队与 2015 年提出的性能模型，用于提升浏览器内的用户体验和性能。RAIL 模型的理念是 "以用户为中心；最终目标不是让你的网站在任何特定设备上都能运行很快，而是使用户满意。" RAIL 把交互分为四个阶段：页面加载，空闲，响应用户输入，滚动和动画。按首字母缩写顺序，其主要原则是：
 - 响应(Response):应该尽可能快速的响应用户，应该在100ms以内响应用户输入。
@@ -52,7 +52,7 @@ RAIL 是 Response, Animation, Idle, 和 Load 的首字母缩写, 是一种由 Go
 ### Web Vitals
 
 Web Vitals指核心网页指标，这组策略侧重于用户体验的三个方面：加载、互动和视觉稳定性。它包括以下指标：
-![alt text](image-1.png)
+![alt text](./images/image-1.png)
 - Largest Contentful Paint (LCP)：衡量加载性能。 为了提供良好的用户体验，LCP 必须在网页首次开始加载后的 2.5 秒内发生。
 - First Input Delay (FID)：衡量互动。为了提供良好的用户体验，页面的 FID 不得超过 100 毫秒。
 - Cumulative Layout Shift (CLS)：衡量视觉稳定性。为了提供良好的用户体验，必须将 CLS 保持在 0.1. 或更低。
@@ -61,10 +61,10 @@ Web Vitals指核心网页指标，这组策略侧重于用户体验的三个方�
 
 ### chrome插件分析
 chrome应用商店搜索web vitals 下载安装，可以查看对应网页指标测量结果：
-![alt text](image-2.png)
+![alt text](./images/image-2.png)
 
 ### 通过performance.timing分析
-![alt text](image-3.png)
+![alt text](./images/image-3.png)
 属性的含义和测量方法可以参考 [perfprmance性能分析指标](https://juejin.cn/post/7268221660527919156?searchId=20240225203838C17234926CADEDF04185)，这边就不介绍了。
 
 ### NPM 包
@@ -83,23 +83,23 @@ onLCP(console.log);
 
 ### 第三方网站分析
 这边推荐三个网站pagespeed 、  webpagetest 、 debuggerBear。该网站不仅能分析性能问题点，还能给出对应的解决方案。还提供了文档，教我们怎么分析查看分析结果。这个是测试知乎首页的分析结果，页面包含了Web Vitals、 Request 等。
-![alt text](image-4.png)
+![alt text](./images/image-4.png)
 还提供了查看分析指标的文档，这边介绍了如何查看 NetWork 的瀑布流：
-![alt text](image-5.png)
+![alt text](./images/image-5.png)
 ### Chrome Devtools性能测试
 这边主要介绍 NetWork 和 Perfomance面板，以及Coverage覆盖率测试。
 
 **NetWork面板**
 
-![alt text](image-6.png)
+![alt text](./images/image-6.png)
 
 **Perfomance面板**
 
-![alt text](image-7.png)
+![alt text](./images/image-7.png)
 
 **Coverage分析工具**
 
-![alt text](image-8.png)
+![alt text](./images/image-8.png)
 
 Coverage 表格展示了录制过程中加载的所有 JS 和 CSS 文件，以及每个文件的大小、运行时覆盖率，汇总数据展示在页面底部的状态栏中。正常情况下webpack已经 Tree Shaking ，但是 Coverage 数据还是居高不下， 可以考虑下code-splitting。
 
@@ -132,13 +132,13 @@ Chrome Devtools除了这些面板之外，还有Lighthouse 和 Memory等面板�
 
 每次主机名的解析都需要一次网络往返，从而增加了请求的延迟时间，同时还会阻塞后续的请求。
 DNS的缓存有浏览器缓存和系统缓存，正常情况下chrome浏览器的缓存时间为1分钟，而系统缓存可以根据自己的需求配置，如下图，域名解析的时候配置：
-![alt text](image-9.png)
+![alt text](./images/image-9.png)
 
 接口请求具体的DNS查找时间可以在Timing面板中查看，如下图：
-![alt text](image-10.png)
+![alt text](./images/image-10.png)
 
 Timing很好的解释了请求从发起到数据返回的各个时间节点消耗的时间，下图是各个时间节点的解释：
-![alt text](image-11.png)
+![alt text](./images/image-11.png)
 
 当客户端的DNS缓存为空（对于浏览器和操作系统）时，DNS查找的次数等于网页中唯一主机名的数目。这包括在页面的URL,图像，脚本文件，样式表，Flash对象等中使用的主机名。减少唯一主机名的数量将减少DNS查找的数量。**所以减少域名的数量有可能减少页面中并行下载的数量，因为在 HTTP/1.0 和 HTTP/1.1情况下，一个域名只能打开 6 个 TCP 连接（达到上限）**。虽然DNS查找会减少响应时间，但是并行下载可能会增加响应时间。建议是将这些资源划分为至少两个但不超过四个域名。这将在减少DNS查找和允许高度并行下载之间取得良好的折衷。
 
@@ -152,7 +152,7 @@ DNS-prefetch(DNS预获取)是尝试在请求资源之前解析域名。这可能
 
 淘宝的DNS-prefetch使用：
 
-![alt text](image-12.png)
+![alt text](./images/image-12.png)
 
 ### 重用TCP连接
 重用tcp连接尽可能的使用持久连接，以消除因TCP握手和慢启动导致的延迟。
@@ -175,14 +175,14 @@ HTTP1.1版的最大变化，就是引入了持久连接(HTTP Persistent Connecti
 主要特性：多路复用。
 具体想知道HTTP版本之间的区别，可以查看文章  解读 HTTP1/HTTP2/HTTP3
 配置HTTP2首先要域名要配置SSL证书，接着配置Nginx。公司已经接入了HTTP2。如下图：
-![alt text](image-13.png)
+![alt text](./images/image-13.png)
 
 ### 减少HTTP重定向
 
 HTTP重定向需要额外的DNS查询、TCP握手等非常耗时，最佳的重定向次数为0。
 压缩传输的资源
 比如Gzip、图片压缩。
-![alt text](image-14.png)
+![alt text](./images/image-14.png)
 
 ### 合理使用缓存
 HTTP 缓存  和 Service Worker等缓存。
@@ -264,4 +264,4 @@ CSS是构建渲染树的必备元素，首次构建网页时，JavaScript常常�
 ## 最后
 
 最后贴上一个谷歌提供给开发者使用的的网站 [传送门](https://web.dev/explore)。该网站除了文章前面所说的性能指标，也列出了web优化方法。还有一系列的博客文章等都可以学习。
-![alt text](image-16.png)
+![alt text](./images/image-16.png)
