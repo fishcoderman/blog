@@ -161,7 +161,7 @@ export default {
       "/backend/docker/": {
         text: "Docker & Linux",
         items: [
-          { text: "Docker创建并MySQL容器", link: "/backend/docker/Docker创建并MySQL容器" },
+          { text: "Docker创建MySQL容器", link: "/backend/docker/Docker创建并MySQL容器" },
           { text: "Nginx设置请求和响应头", link: "/backend/docker/Nginx设置请求和响应头" },
           { text: "Linux常见命令行操作", link: "/backend/docker/Linux常见命令行操作" },
           { text: "Docker常见命令", link: "/backend/docker/Docker常见命令" },

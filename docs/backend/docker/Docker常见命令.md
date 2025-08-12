@@ -1,6 +1,6 @@
 # Docker常见命令
 
-### docker 操作
+## Docker 镜像
 
 ```bash
 从docker库中下载镜像：
@@ -12,6 +12,13 @@
 下载指定的镜像版本：
 > docker images tomcat:9
 
+删除镜像：
+> docker rmi tomcat:9
+```
+
+## Docker 容器
+
+```bash
 启动tomcat:
 > docker run –p 8080:8080 tomcat
 
@@ -26,6 +33,7 @@
 
 停止容器
 > docker stop 9be696a0c283 //停止正在运行容器（或Ctrl+c）
+
 > docker container stop tomcat1//停止正运行容器(ID或Names)
 
 重启已关闭容器
@@ -46,14 +54,10 @@ docker run --rm -d --name tomcat1 -p 8080:8080 tomcat
 
 docker exec -it nginx-80 bash //进入容器名称叫nginx-80
 
-whereis nginx
-/usr/sbin/nginx /usr/lib/nginx /etc/nginx /usr/share/nginx
-// 其中倒二的 /etc/nginx 为配置目录  /usr/share/nginx为静态资源目录 在html文件夹底下
-
 docker cp nginx-80:/usr/share/nginx/html /root // 容器内部复制文件到 外部
 docker cp index.html nginx-80:/usr/share/nginx/html // 外部复制文件到容器
 
-数据卷 // 能共享外部和容器内的文件，外部文件更改会实时同步到容器内
+// 数据卷，能共享外部和容器内的文件，外部文件更改会实时同步到容器内
 docker run --rm -d --name tomcat-8081 -p 8081:8080 -v
 /usr/local/docker/qfnj/:/usr/local/tomcat/webapps/qfnj tomcat
 

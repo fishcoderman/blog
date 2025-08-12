@@ -1,7 +1,8 @@
 # Nginx设置请求和响应头
+
 Nginx 配置示例，展示如何同时设置请求和响应的 HTTP 头部。
 
-### Nginx 配置示例
+## Nginx 配置示例
 
 ```nginx
 server {
@@ -34,7 +35,7 @@ server {
 }
 ```
 
-### 解释
+## 解释
 
 1. **设置响应头**：
    - `add_header Cache-Control "public, max-age=3600";`：为所有响应设置 `Cache-Control` 头，指示客户端缓存该资源 1 小时。
@@ -51,6 +52,6 @@ server {
 4. **针对 API 的特定设置**：
    - 在 `/api` 路径下，设置了允许跨域请求的头部，以支持 CORS（跨源资源共享）。
 
-### 总结
+## 总结
 
 这个示例展示了如何在 Nginx 中同时设置请求和响应的 HTTP 头部。通过使用 `add_header` 和 `proxy_set_header` 指令，可以灵活地控制请求和响应的行为，以满足应用的需求。

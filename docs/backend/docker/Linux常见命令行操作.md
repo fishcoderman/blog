@@ -1,40 +1,118 @@
-```sh
-在 Vim 中，要删除多行，可以使用以下步骤：
+# Linux常见命令行操作
 
-移动光标到要开始删除的那一行。
+本文介绍一些常用的Linux命令。
 
-按 V 进入可视模式（按大写的 V 可以选择整行）。
+## 文件和目录操作
 
-使用方向键上下移动选择多行。
+### `ls`
 
-按 d 删除选中的行。
+`ls` 命令用于列出目录中的文件和子目录。 <mcreference link="https://www.runoob.com/w3cnote/linux-common-command-2.html" index="2">2</mcreference>
 
-或者，更简单的方法是使用范围：
+常用选项：
+* `-a`: 显示所有文件，包括以`.`开头的隐藏文件。 <mcreference link="https://www.runoob.com/w3cnote/linux-common-command-2.html" index="2">2</mcreference>
+* `-l`: 使用长格式显示文件信息，包括权限、所有者、大小和修改时间。 <mcreference link="https.://www.runoob.com/w3cnote/linux-common-command-2.html" index="2">2</mcreference>
+* `-h`: 以人类可读的格式显示文件大小 (例如，KB, MB, GB)。 <mcreference link="https://www.runoob.com/w3cnote/linux-common-command-2.html" index="2">2</mcreference>
 
-移动光标到要开始删除的那一行。
+### `cd`
 
-输入 :.,+Nd，其中 . 代表当前行，N 是你想删除的行数。
+`cd` 命令用于切换当前工作目录。
 
-例如，要删除当前行开始的下面 5 行，可以输入 :.,+5d。
+* `cd ~`: 切换到主目录。
+* `cd ..`: 切换到上一级目录。
+* `cd /path/to/directory`: 切换到指定目录。
 
-另外，如果你已经选中了多行，可以直接按 d 来删除选中的行。
+### `pwd`
 
-在命令行中，可以使用以下快捷键来移动光标到行首和行尾：
+`pwd` 命令用于显示当前工作目录的路径。
 
-‌跳转到命令行行首‌：使用 Ctrl+A 或者 Home 键。
+### `mkdir`
 
-‌跳转到命令行行尾‌：使用 Ctrl+E 或者 End 键。
+`mkdir` 命令用于创建新目录。
 
-这些快捷键可以帮助用户快速定位到命令行的开始或结束位置，特别是在输入长命令或编辑命令时非常有用。此外，还有其他一些快捷键可以帮助用户更高效地编辑命令行，例如：
+* `mkdir new_directory`: 创建一个名为 `new_directory` 的新目录。
+* `mkdir -p /path/to/new_directory`: 递归地创建目录，如果父目录不存在，也会一并创建。
 
-‌删除行首到光标位置的字符‌：使用 Ctrl+U。
+### `rm`
 
-‌删除光标位置到行尾的字符‌：使用 Ctrl+K。
+`rm` 命令用于删除文件和目录。
 
-‌清理屏幕‌：使用 Ctrl+L 或者 clear 命令来清除终端屏幕的内容。
+* `rm file.txt`: 删除一个名为 `file.txt` 的文件。
+* `rm -r directory`: 递归地删除一个目录及其所有内容。
+* `rm -f file.txt`: 强制删除文件，不进行提示。
 
-‌命令行或文件名补全‌：输入命令行或文件名前缀后按 Tab 键来进行自动补全。
+### `cp`
 
-这些快捷键的组合使用可以大大提高在命令行中工作的效率‌
+`cp` 命令用于复制文件和目录。
 
-```
+* `cp source.txt destination.txt`: 将 `source.txt` 复制为 `destination.txt`。
+* `cp -r source_directory destination_directory`: 递归地复制整个目录。
+
+### `mv`
+
+`mv` 命令用于移动或重命名文件和目录。
+
+* `mv old_name.txt new_name.txt`: 将 `old_name.txt` 重命名为 `new_name.txt`。
+* `mv file.txt /path/to/destination`: 将 `file.txt` 移动到指定目录。
+
+## 文件内容操作
+
+### `cat`
+
+`cat` 命令用于查看文件内容。
+
+* `cat file.txt`: 显示 `file.txt` 的全部内容。
+
+### `less`
+
+`less` 命令用于分页查看文件内容，对于大文件非常有用。
+
+* `less large_file.txt`: 分页显示 `large_file.txt` 的内容。
+
+### `head`
+
+`head` 命令用于查看文件的开头部分。
+
+* `head -n 20 file.txt`: 显示 `file.txt` 的前20行。
+
+### `tail`
+
+`tail` 命令用于查看文件的结尾部分。
+
+* `tail -n 20 file.txt`: 显示 `file.txt` 的后20行。
+* `tail -f log_file.txt`: 实时跟踪 `log_file.txt` 的更新，常用于查看日志文件。
+
+## 系统信息
+
+### `df`
+
+`df` 命令用于显示磁盘空间使用情况。
+
+* `df -h`: 以人类可读的格式显示磁盘空间。
+
+### `du`
+
+`du` 命令用于显示文件或目录的磁盘使用情况。
+
+* `du -sh /path/to/directory`: 以人类可读的格式显示指定目录的总大小。
+
+### `top`
+
+`top` 命令用于实时显示系统进程和资源使用情况。
+
+### `ps`
+
+`ps` 命令用于显示当前用户的进程。
+
+* `ps aux`: 显示所有用户的进程，包括详细信息。
+
+## 网络
+
+### `ping`
+
+`ping` 命令用于测试与另一台主机的网络连接。
+
+* `ping google.com`: 测试与 `google.com` 的连接。
+
+### `ifconfig` / `ip`
+
+`ifconfig` (较旧) 或 `ip addr` (较新) 命令用于显示和配置网络接口。
