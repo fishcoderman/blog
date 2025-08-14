@@ -183,6 +183,10 @@ export default {
         text: "生活",
         items: [
           { text: "人身保险科普", link: "/life/人身保险科普" },
+          { text: "高效学习", link: "/life/高效学习" },
+          { text: "术语整合", link: "/life/术语整合" },
+          { text: "如何高效沟通", link: "/life/如何高效沟通" },
+          { text: "如何锻炼表达能力", link: "/life/如何锻炼表达能力" }
         ],
       },
     },
