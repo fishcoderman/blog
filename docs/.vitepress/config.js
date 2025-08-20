@@ -171,6 +171,7 @@ export default {
         text: "AI",
         items: [
           { text: "DeepSeek构建本地知识库", link: "/ai/DeepSeek构建本地知识库" },
+          { text: "Node开发MCP服务", link: "/ai/Node开发MCP服务" },
           { text: "大模型原理", link: "/ai/大模型原理" },
           { text: "LangChain工作流", link: "/ai/LangChain工作流" },
           { text: "LangChain接入MCP实现流程", link: "/ai/LangChain接入MCP完整实现流程" },

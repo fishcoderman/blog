@@ -7,6 +7,7 @@
 ## 目录
 
 - [DeepSeek构建本地知识库](./DeepSeek构建本地知识库.md)
+- [Node开发MCP服务](./Node开发MCP服务.md)
 - [大模型原理](./大模型原理.md)
 - [LangChain工作流](./LangChain工作流.md)
 - [LangChain接入MCP实现流程](./LangChain接入MCP完整实现流程.md)

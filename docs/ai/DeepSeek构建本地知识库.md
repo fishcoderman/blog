@@ -45,10 +45,10 @@ MaxKB 是一个 本地知识库问答系统，通常用于搭配私有化大模�
   - 容器启动后，打开浏览器，访问 http://localhost:8080/ui/login。
   - 默认的登录用户名为 admin，密码为 MaxKB@123..首次登录后，建议及时修改密码以确保安全。
   - 登录之后的界面如下
-  ![alt text](image.png)
+  ![alt text](./images/image.png)
 
 4. 或者也可以使用docker桌面端，可视化安装。
-   ![alt text](image-1.png)
+   ![alt text](./images/image-1.png)
    MaxKB启动之后，先放着，之后再详情介绍如何关联DeepSeek。
 
 ## 3. DeepSeek本地部署
@@ -65,24 +65,24 @@ DeepSeek之所以强大，是因为它是强化学习模式，而传统的大模
 - 适合：有数据隐私方面担忧的或者保密单位根本就不能上网的。
 - 使用满血版：DeepSeek R1 671B 全量模型的文件体积高达720GB，对于绝大部分人而言，本地资源有限，很难达到这个配置
 
-![alt text](image-2.png)
+![alt text](./images/image-2.png)
 
 开源2+6个模型。R1预览版和正式版的参数高达660B，非一般 公司能用。为进一步平权，于是他们就蒸馏出了6个小模型， 并开源给社区。最小的为1.5B参数，10G显存可跑。如果你要在个人电脑上部署，一般选择其他架构的蒸馏模 型，本质是微调后的Llama或Qwen模型，基本32B以下，并不能完全发挥出DeepSeek R1的实力。
 
-![alt text](image-3.png)
+![alt text](./images/image-3.png)
 
 我们以通常选择7B，大多数的电脑都能够运行起来。
 
 ### 安装 ollama
 
 在 ollama 官网 ollama.com/ 下载：
-![alt text](image-4.png)
+![alt text](./images/image-4.png)
 
 安装后就可以用 ollama 命令了，运行  
 
 > ollama-v
 
-![alt text](image-5.png)
+![alt text](./images/image-5.png)
 能显示ollama版本说明安装成功。
 
 ### 本地安装DeepSeek
@@ -91,16 +91,16 @@ DeepSeek之所以强大，是因为它是强化学习模式，而传统的大模
 
 > ollama run deepseek-r1:7b
 
-![alt text](image-6.png)
+![alt text](./images/image-6.png)
 
 Success 代表安装成功。
 
 运行  /? 获取帮助
 
-![alt text](image-7.png)
+![alt text](./images/image-7.png)
 
 可以直接着在控制台提问
-![alt text](image-8.png)
+![alt text](./images/image-8.png)
 
 最后，查看已有模型是 ollama list, 退出对话是 /bye。
 在控制台中操作不太方便，也太丑了，接下来结合客户端工具来使用。
@@ -109,27 +109,27 @@ Success 代表安装成功。
 
 ### 创建知识库
 回到MaxKB，选择知识库tab，如下所示：
-![alt text](image-9.png)
+![alt text](./images/image-9.png)
 
 点击创建知识库，新建一个知识库，然后上传本地文件，文档可以是文本的 txt、markdown 等，也可以是表格的 excel、csv 等。
-![alt text](image-10.png)
+![alt text](./images/image-10.png)
 
 创建知识库的时候也可以选择web站点，如下选了react官网。
 
-![alt text](image-11.png)
+![alt text](./images/image-11.png)
 
 它会自动爬取网站内容
 
-![alt text](image-12.png)
+![alt text](./images/image-12.png)
 
 ### 创建模型
 来到系统设置tab，选择模型设置，然后添加模型，这边选择 Ollama 供应商
 
-![alt text](image-13.png)
+![alt text](./images/image-13.png)
 
 接着创建
 
-![alt text](image-14.png)
+![alt text](./images/image-14.png)
 
 基础模型选择我们安装的 deepseek-r1:7b， 然后API URL填写 host.docker.internal:11434 。
 那这边的  host.docker.internal 是什么呢？
@@ -144,18 +144,18 @@ Success 代表安装成功。
 
 输入应用名
 
-![alt text](image-15.png)
+![alt text](./images/image-15.png)
 
 然后关联知识库
 
-![alt text](image-16.png)
+![alt text](./images/image-16.png)
 
 然后这边可以看到 BASE URL 和 API KEY，这个API KEY 首次需要自己创建一个。这个秘钥后面有用到。
-![alt text](image-17.png)
+![alt text](./images/image-17.png)
 
 这边点击【演示】，可以结合知识库愉快的问问题了。比如我问了，朴朴前端谁最帅。
 
-![alt text](image-18.png)
+![alt text](./images/image-18.png)
 
 虽然可以通过可视化面板交互了，但是能不能更定制一步呢？答案是可以的。
 
@@ -176,7 +176,7 @@ package.json 配置  "type": "module"
 然后创建 src/index.js
 项目结构如图：
 
-![alt text](image-19.png)
+![alt text](./images/image-19.png)
 
 代码内容为：
 
@@ -229,12 +229,12 @@ main();
 - stream 指定 true 就是流式返回内容。
 - 其中需要注意的是apiKey和baseURL，它分别对应到具体应用 apiKey 和 Base UR
 
-![alt text](image-20.png)
+![alt text](./images/image-20.png)
 
 具体 openai 的用法可以查看npm官网： https://www.npmjs.com/package/openai
 
 最后展示一下运行效果（有点慢）：
-![alt text](image-21.png)
+![alt text](./images/image-21.png)
 
 ## 6. 工具
 
@@ -246,7 +246,7 @@ main();
 
 网上看到一个学习ai的资料，有精力的同学可以学习，[通往AGI之路](https://waytoagi.feishu.cn/wiki/QPe5w5g7UisbEkkow8XcDmOpn8e)。
 
-![alt text](image-22.png)
+![alt text](./images/image-22.png)
 
 ## 8. 总结
 
