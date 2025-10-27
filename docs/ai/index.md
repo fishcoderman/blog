@@ -11,6 +11,6 @@
 - [大模型原理](./大模型原理.md)
 - [LangChain工作流](./LangChain工作流.md)
 - [LangChain接入MCP实现流程](./LangChain接入MCP完整实现流程.md)
-- [LangChain实现本地知识库问答](./LangChain实现本地知识库问答.md)
-- [LangGraph](./LangGraph.md)
+- [LangGraph入门](./LangGraph入门.md)
+  [Multi-Agent](./Multi-Agent.md)
 - [Dify私有化部署](./Dify私有化部署.md)
