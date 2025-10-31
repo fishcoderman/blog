@@ -164,6 +164,7 @@ export default {
         text: "Python",
         items: [
           { text: "uv虚拟环境管理命令", link: "/backend/python/uv虚拟环境管理命令" },
+          {text: "poetry多包管理", link: "/backend/python/poetry多包管理" },
         ],
       },
       "/backend/docker/": {
