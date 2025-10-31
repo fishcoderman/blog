@@ -44,6 +44,7 @@ export default {
         items: [
           { text: "Node", link: "/backend/node/" },
           { text: "Java", link: "/backend/java/" },
+          { text: "Python", link: "/backend/python/" },
           { text: "Docker", link: "/backend/docker/" },
         ],
       },
@@ -148,6 +149,7 @@ export default {
           { text: "Mac最新Nvm安装教程", link: "/backend/node/Mac最新Nvm安装教程" },
           { text: "Node和Rust交互", link: "/backend/node/Node和Rust交互" },
           { text: "Node子进程和子线程", link: "/backend/node/Node子进程和子线程" },
+          { text: "npm scripts 中的命令符号", link: "/backend/node/npm scripts 中的命令符号" },
         ],
       },
       "/backend/java/": {
@@ -156,6 +158,12 @@ export default {
           { text: "SpringBoot结合Axios实现请求", link: "/backend/java/SpringBoot结合Axios实现请求" },
           { text: "chmod 权限设置", link: "/backend/java/chmod" },
           { text: "中间件", link: "/backend/java/中间件" },
+        ],
+      },
+      "/backend/python/": {
+        text: "Python",
+        items: [
+          { text: "uv虚拟环境管理命令", link: "/backend/python/uv虚拟环境管理命令" },
         ],
       },
       "/backend/docker/": {

@@ -13,3 +13,4 @@
 - [node和rust交互](./node和rust交互.md)
 - [node子进程和子线程](./node子进程和子线程.md)
 - [Node专属于ESM的语法](./Node专属于ESM的语法.md)
+- [npm中scripts中的命令符号](./npm%20scripts%20中的命令符号.md)
