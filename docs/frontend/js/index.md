@@ -38,3 +38,4 @@
 - [Web Component](./Web%20Component.md)
 - [getBoundingClientRec](./getBoundingClientRec.md)
 - [ES6到ESNext各年度的新增语法特性](./ES6到ESNext各年度的新增语法特性.md)
+- [内存泄漏检测](./内存泄漏检测.md)

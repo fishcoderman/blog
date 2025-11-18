@@ -88,6 +88,7 @@ export default {
           { text: "如何监听路由变化", link: "/frontend/js/如何监听路由变化" },
           { text: "ES6到ESNext各年度的新增语法特性", link: "/frontend/js/ES6到ESNext各年度的新增语法特性" },
           { text: "自定义模板引擎", link: "/frontend/js/自定义模板引擎" },
+          {text: "内存泄漏检测", link: "/frontend/js/内存泄漏检测" },
         ],
       },
       "/frontend/react/": {
@@ -128,6 +129,7 @@ export default {
           { text: "Mermaid语法", link: "/frontend/structure/Mermaid语法" },
           { text: 'Github Pages搭建博客', link: '/frontend/structure/Github Pages搭建博客' },
           { text: "npm包依赖关系", link: "/frontend/structure/npm包依赖关系" },
+          { text: "性能测试", link: "/frontend/structure/性能测试" },
         ],
       },
       "/frontend/flutter/": {
