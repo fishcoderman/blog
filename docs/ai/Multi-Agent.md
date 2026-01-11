@@ -1,332 +1,457 @@
 # Multi-Agent
 
-LangGraph 的 Multi-Agent 案例，一个简单的多智能体协作系统，包含研究员、分析师、撰写员和监督员。
+Multi-agent（多智能体）是让**多个 AI Agent 协同工作**完成复杂任务的系统。
+
+## 什么是 Multi-Agent？
+
+### 单 Agent vs Multi-Agent
+
+**单 Agent（当前项目）：**
+```
+用户提问 → 一个 Agent → 调用工具 → 返回结果
+```
+
+**Multi-Agent：**
+```
+用户提问 → 协调 Agent
+              ↓
+         分配任务
+         ╱    │    ╲
+    Agent1  Agent2  Agent3
+     研究员  分析师  编写者
+         ╲    │    ╱
+         汇总结果
+              ↓
+          返回结果
+```
+
+### 核心概念
+
+多个 Agent，每个有**不同的角色和专长**：
+- 🔍 **研究员 Agent** - 搜索和收集信息
+- 📊 **分析师 Agent** - 分析数据
+- ✍️ **写作 Agent** - 生成文档
+- 🎯 **协调 Agent** - 分配和管理任务
+
+## 为什么需要 Multi-Agent？
+
+### 优势
+
+1. **专业分工** - 每个 Agent 专注自己擅长的领域
+2. **并行处理** - 多个 Agent 同时工作，提高效率
+3. **复杂任务** - 将大任务分解为小任务
+4. **可维护性** - 每个 Agent 独立开发和测试
+
+### 适用场景
+
+- 📝 复杂的研究报告生成
+- 🔍 多源信息收集和分析
+- 🤖 客服系统（路由、处理、升级）
+- 🎓 教学系统（讲解、练习、评估）
+- 💼 工作流自动化
+
+## LangGraph 中的 Multi-Agent 实现
+
+### 方式 1: 层级结构（Supervisor Pattern）
+
+有一个**主管 Agent**协调多个**工作 Agent**。
 
 ```python
-import os
 from typing import Annotated, TypedDict, Literal
-from dotenv import load_dotenv
-from langchain.chat_models import init_chat_model
-from langgraph.graph import StateGraph, START, END
-from langgraph.graph.message import add_messages
+from langgraph.graph import StateGraph, END
+from langchain_openai import ChatOpenAI
 from langchain_core.messages import HumanMessage, SystemMessage
 
-# 加载环境变量
-load_dotenv(override=True)
+# 1. 定义共享状态
+class MultiAgentState(TypedDict):
+    messages: Annotated[list, add_messages]
+    next_agent: str
 
-API_KEY = os.getenv("API_KEY")
-BASE_URL = os.getenv("BASE_URL")
-MODEL = os.getenv("MODEL")
+# 2. 创建专业 Agents
+llm = ChatOpenAI(model="gpt-4o-mini")
 
-# 初始化模型
-model = init_chat_model(
-    model=MODEL, 
-    model_provider="openai",  # 使用 OpenAI 兼容的接口
-    api_key=API_KEY,
-    base_url=BASE_URL
-)
-
-# 定义状态
-class AgentState(TypedDict):
-    """多智能体共享状态"""
-    messages: Annotated[list, add_messages]  # 消息历史
-    task: str  # 任务描述
-    research_result: str  # 研究结果
-    analysis_result: str  # 分析结果
-    final_report: str  # 最终报告
-    next_agent: str  # 下一个要执行的 agent
-
-
-# ========== Agent 节点定义 ==========
-
-def researcher_node(state: AgentState) -> AgentState:
-    """研究员节点 - 负责收集信息和基础研究"""
-    print("\n[研究员] 开始研究任务...")
+# 研究员 Agent
+def researcher_agent(state):
+    """搜索和收集信息"""
+    system = SystemMessage(content="""你是一个专业的研究员。
+    你的任务是搜索和收集相关信息。
+    提供准确、详细的研究结果。""")
     
-    task = state["task"]
-    
-    # 构建研究提示
-    messages = [
-        SystemMessage(content="""是一名专业的研究员。
-的任务是：
-1. 理解用户的问题
-2. 收集相关的背景知识和信息
-3. 提供详细的研究结果
+    messages = [system] + state["messages"]
+    response = llm.invoke(messages)
+    return {"messages": [response]}
 
-请用简洁专业的语言回答。"""),
-        HumanMessage(content=f"请研究以下主题：{task}")
-    ]
+# 分析师 Agent
+def analyst_agent(state):
+    """分析数据和信息"""
+    system = SystemMessage(content="""你是一个数据分析师。
+    你的任务是分析研究员提供的信息。
+    提供深入的分析和洞察。""")
     
-    # 调用模型
-    response = model.invoke(messages)
-    research_result = response.content
-    
-    print(f"[研究员] 研究完成！结果长度: {len(research_result)} 字符")
-    
-    return {
-        **state,
-        "research_result": research_result,
-        "messages": [HumanMessage(content=f"研究员完成研究：{research_result[:100]}...")],
-        "next_agent": "analyst"
-    }
+    messages = [system] + state["messages"]
+    response = llm.invoke(messages)
+    return {"messages": [response]}
 
-
-def analyst_node(state: AgentState) -> AgentState:
-    """分析师节点 - 负责分析研究结果"""
-    print("\n[分析师] 开始分析研究结果...")
+# 写作 Agent
+def writer_agent(state):
+    """生成最终文档"""
+    system = SystemMessage(content="""你是一个专业写作者。
+    基于研究和分析结果，撰写清晰、专业的报告。
+    确保内容结构清晰、易于理解。""")
     
-    research_result = state["research_result"]
-    
-    # 构建分析提示
-    messages = [
-        SystemMessage(content="""是一名专业的数据分析师。
-的任务是：
-1. 分析研究员提供的信息
-2. 提取关键要点
-3. 发现潜在的模式和洞察
-4. 提供结构化的分析结果
+    messages = [system] + state["messages"]
+    response = llm.invoke(messages)
+    return {"messages": [response]}
 
-请提供深入的分析。"""),
-        HumanMessage(content=f"请分析以下研究结果：\n\n{research_result}")
-    ]
+# 3. 协调 Agent（决定下一步）
+def supervisor_agent(state) -> Literal["researcher", "analyst", "writer", "end"]:
+    """主管决定下一步调用哪个 Agent"""
+    system = SystemMessage(content="""你是项目主管。
+    决定下一步需要哪个团队成员：
+    - researcher: 需要收集更多信息
+    - analyst: 需要分析数据
+    - writer: 需要撰写报告
+    - end: 任务完成
     
-    # 调用模型
-    response = model.invoke(messages)
-    analysis_result = response.content
+    只返回一个选项。""")
     
-    print(f"[分析师] 分析完成！结果长度: {len(analysis_result)} 字符")
+    messages = [system] + state["messages"]
+    response = llm.invoke(messages)
     
-    return {
-        **state,
-        "analysis_result": analysis_result,
-        "messages": state["messages"] + [HumanMessage(content=f"分析师完成分析：{analysis_result[:100]}...")],
-        "next_agent": "writer"
-    }
-
-
-def writer_node(state: AgentState) -> AgentState:
-    """撰写员节点 - 负责撰写最终报告"""
-    print("\n[撰写员] 开始撰写最终报告...")
-    
-    task = state["task"]
-    research_result = state["research_result"]
-    analysis_result = state["analysis_result"]
-    
-    # 构建撰写提示
-    messages = [
-        SystemMessage(content="""是一名专业的技术撰写员。
-的任务是：
-1. 整合研究员的研究结果和分析师的分析
-2. 撰写一份清晰、专业的报告
-3. 使用适当的格式和结构
-4. 确保报告易于理解
-
-请撰写一份完整的报告。"""),
-        HumanMessage(content=f"""请基于以下信息撰写报告：
-
-原始任务：{task}
-
-研究结果：
-{research_result}
-
-分析结果：
-{analysis_result}
-
-请撰写一份结构清晰的最终报告。""")
-    ]
-    
-    # 调用模型
-    response = model.invoke(messages)
-    final_report = response.content
-    
-    print(f"[撰写员] 报告撰写完成！长度: {len(final_report)} 字符")
-    
-    return {
-        **state,
-        "final_report": final_report,
-        "messages": state["messages"] + [HumanMessage(content=f"撰写员完成报告：{final_report[:100]}...")],
-        "next_agent": "end"
-    }
-
-
-def supervisor_node(state: AgentState) -> AgentState:
-    """监督员节点 - 负责协调整个流程"""
-    print("\n[监督员] 正在协调任务分配...")
-    
-    task = state["task"]
-    
-    print(f"[监督员] 收到任务: {task}")
-    print(f"[监督员] 开始分配任务给研究员...")
-    
-    return {
-        **state,
-        "next_agent": "researcher"
-    }
-
-
-# ========== 路由函数 ==========
-
-def route_agent(state: AgentState) -> Literal["researcher", "analyst", "writer", "end"]:
-    """根据当前状态路由到下一个 agent"""
-    next_agent = state.get("next_agent", "researcher")
-    
-    if next_agent == "end":
-        return "end"
-    elif next_agent == "researcher":
+    # 解析 LLM 的决策
+    content = response.content.lower()
+    if "researcher" in content:
         return "researcher"
-    elif next_agent == "analyst":
+    elif "analyst" in content:
         return "analyst"
-    elif next_agent == "writer":
+    elif "writer" in content:
         return "writer"
     else:
         return "end"
 
+# 4. 构建 Multi-Agent 图
+workflow = StateGraph(MultiAgentState)
+
+# 添加所有 Agent 节点
+workflow.add_node("researcher", researcher_agent)
+workflow.add_node("analyst", analyst_agent)
+workflow.add_node("writer", writer_agent)
+workflow.add_node("supervisor", supervisor_agent)
+
+# 设置入口
+workflow.set_entry_point("supervisor")
+
+# 主管的条件边（路由到不同 Agent）
+workflow.add_conditional_edges(
+    "supervisor",
+    supervisor_agent,
+    {
+        "researcher": "researcher",
+        "analyst": "analyst",
+        "writer": "writer",
+        "end": END,
+    }
+)
+
+# 每个 Agent 完成后回到主管
+workflow.add_edge("researcher", "supervisor")
+workflow.add_edge("analyst", "supervisor")
+workflow.add_edge("writer", "supervisor")
+
+# 编译
+multi_agent_graph = workflow.compile()
+```
+
+**工作流程图：**
+```
+       用户输入
+          ↓
+    ┌──────────┐
+    │Supervisor│ ← 主管决策
+    └────┬─────┘
+         │
+    决定下一步？
+    ╱    │    ╲
+研究员  分析师  写作者
+  │      │      │
+  └──────┴──────┘
+         ↓
+    ┌──────────┐
+    │Supervisor│ ← 再次决策
+    └────┬─────┘
+         │
+      继续或结束？
+```
+
+### 方式 2: 对等协作（Peer-to-Peer）
+
+多个 Agent **平等协作**，直接交流。
+
+```python
+from langgraph.graph import StateGraph, END
+
+class CollaborativeState(TypedDict):
+    messages: Annotated[list, add_messages]
+    task_type: str
+
+# Agent 之间可以直接通信
+workflow = StateGraph(CollaborativeState)
+
+workflow.add_node("coder", coder_agent)
+workflow.add_node("reviewer", reviewer_agent)
+workflow.add_node("tester", tester_agent)
+
+workflow.set_entry_point("coder")
+
+# 编码 → 审查 → 测试 → 可能回到编码
+workflow.add_edge("coder", "reviewer")
+workflow.add_conditional_edges(
+    "reviewer",
+    lambda state: "tester" if approved else "coder",
+    {"tester": "tester", "coder": "coder"}
+)
+workflow.add_conditional_edges(
+    "tester",
+    lambda state: "end" if tests_pass else "coder",
+    {"end": END, "coder": "coder"}
+)
+
+graph = workflow.compile()
+```
+
+**工作流程图：**
+```
+┌──────┐   ┌─────────┐   ┌────────┐
+│Coder │ → │Reviewer │ → │ Tester │
+└───↑──┘   └────↓────┘   └────↓───┘
+    │          │              │
+    └──────────┴──────────────┘
+       (循环直到通过所有测试)
+```
+
+## 完整示例：研究报告生成系统
+
+让我创建一个实用的多 Agent 示例文件：
+
+```python
+"""
+Multi-Agent 研究报告生成系统
+演示如何使用多个专业 Agent 协同工作
+"""
+from typing import Annotated, TypedDict, Literal
+from langgraph.graph import StateGraph, END, add_messages
+from langchain_openai import ChatOpenAI
+from langchain_core.messages import HumanMessage, SystemMessage, AIMessage
+
+# ========== 状态定义 ==========
+class ResearchState(TypedDict):
+    """研究任务的状态"""
+    messages: Annotated[list, add_messages]
+    topic: str
+    research_data: str
+    analysis: str
+    report: str
+
+# ========== Agent 定义 ==========
+llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+
+def researcher(state: ResearchState) -> dict:
+    """研究员：收集信息"""
+    print("\n🔍 研究员开始工作...")
+    
+    system = SystemMessage(content=f"""你是一个专业研究员。
+    研究主题：{state['topic']}
+    
+    任务：搜索和收集关于该主题的关键信息、数据和事实。
+    格式：列出 5-7 个关键点，每个点包含具体数据或事实。""")
+    
+    response = llm.invoke([system, state["messages"][-1]])
+    
+    return {
+        "messages": [AIMessage(content=f"[研究员] {response.content}")],
+        "research_data": response.content
+    }
+
+def analyst(state: ResearchState) -> dict:
+    """分析师：分析数据"""
+    print("\n📊 分析师开始工作...")
+    
+    system = SystemMessage(content=f"""你是一个数据分析师。
+    研究数据：{state['research_data']}
+    
+    任务：分析这些信息，找出：
+    1. 主要趋势和模式
+    2. 关键洞察
+    3. 潜在影响
+    
+    提供专业的分析结论。""")
+    
+    response = llm.invoke([system])
+    
+    return {
+        "messages": [AIMessage(content=f"[分析师] {response.content}")],
+        "analysis": response.content
+    }
+
+def writer(state: ResearchState) -> dict:
+    """写作者：生成报告"""
+    print("\n✍️ 写作者开始工作...")
+    
+    system = SystemMessage(content=f"""你是一个专业写作者。
+    
+    研究数据：{state['research_data']}
+    分析结果：{state['analysis']}
+    
+    任务：基于以上信息，撰写一份结构清晰的研究报告。
+    
+    格式：
+    # {state['topic']} 研究报告
+    
+    ## 执行摘要
+    [简要概述]
+    
+    ## 研究发现
+    [详细研究数据]
+    
+    ## 深度分析
+    [分析结论]
+    
+    ## 总结与建议
+    [关键要点和建议]""")
+    
+    response = llm.invoke([system])
+    
+    return {
+        "messages": [AIMessage(content=f"[写作者] 报告已完成")],
+        "report": response.content
+    }
+
+def supervisor(state: ResearchState) -> Literal["researcher", "analyst", "writer", "end"]:
+    """主管：决定工作流程"""
+    # 简化版：按固定顺序执行
+    messages = state["messages"]
+    
+    # 检查已完成的步骤
+    if not state.get("research_data"):
+        return "researcher"
+    elif not state.get("analysis"):
+        return "analyst"
+    elif not state.get("report"):
+        return "writer"
+    else:
+        return "end"
 
 # ========== 构建图 ==========
+workflow = StateGraph(ResearchState)
 
-def build_multi_agent_graph():
-    """构建多智能体协作图"""
-    
-    # 创建状态图
-    graph_builder = StateGraph(AgentState)
-    
-    # 添加节点
-    graph_builder.add_node("supervisor", supervisor_node)
-    graph_builder.add_node("researcher", researcher_node)
-    graph_builder.add_node("analyst", analyst_node)
-    graph_builder.add_node("writer", writer_node)
-    
-    # 添加边
-    # 开始 -> 监督员
-    graph_builder.add_edge(START, "supervisor")
-    
-    # 监督员 -> 根据路由决定下一个节点
-    graph_builder.add_conditional_edges(
-        "supervisor",
-        route_agent,
-        {
-            "researcher": "researcher",
-            "analyst": "analyst",
-            "writer": "writer",
-            "end": END
-        }
-    )
-    
-    # 研究员 -> 根据路由决定下一个节点
-    graph_builder.add_conditional_edges(
-        "researcher",
-        route_agent,
-        {
-            "researcher": "researcher",
-            "analyst": "analyst",
-            "writer": "writer",
-            "end": END
-        }
-    )
-    
-    # 分析师 -> 根据路由决定下一个节点
-    graph_builder.add_conditional_edges(
-        "analyst",
-        route_agent,
-        {
-            "researcher": "researcher",
-            "analyst": "analyst",
-            "writer": "writer",
-            "end": END
-        }
-    )
-    
-    # 撰写员 -> 结束
-    graph_builder.add_conditional_edges(
-        "writer",
-        route_agent,
-        {
-            "researcher": "researcher",
-            "analyst": "analyst",
-            "writer": "writer",
-            "end": END
-        }
-    )
-    
-    # 编译图
-    graph = graph_builder.compile()
-    
-    return graph
+# 添加 Agent 节点
+workflow.add_node("researcher", researcher)
+workflow.add_node("analyst", analyst)
+workflow.add_node("writer", writer)
 
+# 设置入口点
+workflow.set_entry_point("researcher")
 
-# 创建图实例
-multi_agent_graph = build_multi_agent_graph()
+# 设置流程：研究员 → 分析师 → 写作者
+workflow.add_edge("researcher", "analyst")
+workflow.add_edge("analyst", "writer")
+workflow.add_edge("writer", END)
 
+# 编译
+research_team = workflow.compile()
 
-# ========== 主函数 ==========
-
-def run_multi_agent_task(task: str) -> dict:
-    """
-    运行多智能体任务
+# ========== 使用示例 ==========
+def generate_research_report(topic: str):
+    """生成研究报告"""
+    print(f"\n{'='*60}")
+    print(f"🚀 启动 Multi-Agent 研究团队")
+    print(f"📋 研究主题: {topic}")
+    print(f"{'='*60}")
     
-    Args:
-        task: 任务描述
-        
-    Returns:
-        包含所有结果的字典
-    """
-    print(f"\n{'='*80}")
-    print(f"开始执行多智能体任务")
-    print(f"{'='*80}")
-    print(f"任务: {task}\n")
-    
-    # 运行图
-    result = multi_agent_graph.invoke({
-        "task": task,
-        "messages": [],
-        "research_result": "",
-        "analysis_result": "",
-        "final_report": "",
-        "next_agent": "researcher"
+    # 运行
+    result = research_team.invoke({
+        "messages": [HumanMessage(content=f"研究主题: {topic}")],
+        "topic": topic,
+        "research_data": "",
+        "analysis": "",
+        "report": ""
     })
     
-    print(f"\n{'='*80}")
-    print(f"任务执行完成！")
-    print(f"{'='*80}\n")
+    print(f"\n{'='*60}")
+    print("✅ 研究完成！")
+    print(f"{'='*60}")
+    print("\n📄 最终报告：")
+    print(result["report"])
     
-    # 显示最终报告
-    print("\n" + "="*80)
-    print("最终报告")
-    print("="*80)
-    print(result["final_report"])
-    print("="*80 + "\n")
-    
-    return result
+    return result["report"]
 
-
-# ========== 测试代码 ==========
-
+# 测试
 if __name__ == "__main__":
-    # 示例任务 1: 技术分析
-    print("\n" + "🚀"*40)
-    print("示例 1: LangGraph 框架分析")
-    print("🚀"*40 + "\n")
-    
-    result1 = run_multi_agent_task(
-        "分析 LangGraph 框架的核心特性和应用场景"
-    )
-    
-    # 等待一下
-    print("\n" + "⏳" * 40)
-    print("等待 3 秒...")
-    print("⏳" * 40 + "\n")
-    import time
-    time.sleep(3)
-    
-    # 示例任务 2: 技术对比
-    print("\n" + "🚀"*40)
-    print("示例 2: AI Agent 开发框架对比")
-    print("🚀"*40 + "\n")
-    
-    result2 = run_multi_agent_task(
-        "对比分析目前主流的 AI Agent 开发框架的优缺点"
-    )
-    
-    print("\n✅ 所有任务执行完成！")
+    generate_research_report("人工智能在医疗领域的应用")
+```
+
+## 与当前单 Agent 项目对比
+
+### 当前项目（单 Agent）
+
+```python
+# src/agent/graph.py - 一个 Agent 完成所有任务
+workflow.add_node("agent", call_model)
+workflow.add_node("tools", ToolNode(tools))
+```
+
+**特点：**
+- ✅ 简单直接
+- ✅ 适合通用任务
+- ❌ 没有专业分工
+
+### Multi-Agent 升级
+
+可以将当前项目扩展为：
+
+```python
+# 专业化的多 Agent 系统
+workflow.add_node("math_agent", math_specialist)      # 数学专家
+workflow.add_node("time_agent", time_specialist)      # 时间专家
+workflow.add_node("search_agent", search_specialist)  # 搜索专家
+workflow.add_node("router", route_to_specialist)      # 路由器
+```
+
+## 实际应用示例
+
+### 客服系统
 
 ```
+        客户问题
+           ↓
+    ┌────────────┐
+    │  路由Agent  │ 分类问题
+    └──────┬─────┘
+           │
+    ╱──────┼──────╲
+技术支持  账单查询  产品咨询
+Agent    Agent    Agent
+```
+
+### 代码审查系统
+
+```
+提交代码
+   ↓
+┌────────┐   ┌──────────┐   ┌────────┐
+│静态分析│ → │安全检查  │ → │性能测试│
+└────────┘   └──────────┘   └────────┘
+                ↓
+           汇总报告Agent
+```
+
+## 总结
+
+1. **Multi-Agent** = 多个专业 Agent 协同工作
+2. **实现方式**：
+   - Supervisor 模式（层级）
+   - Peer-to-Peer 模式（对等）
+3. **使用 LangGraph** 实现（不是纯 LangChain）
+4. **适合**：复杂任务、专业分工、并行处理
+
+**建议：** 从单 Agent 开始（如当前项目），在需要时再升级到 Multi-Agent。
