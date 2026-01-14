@@ -3,6 +3,7 @@
 const base = "/blog/";
 export default {
   base,
+  lastUpdated: true,
   // 站点级选项
   title: "首页",
   description: "诗酒趁年华",
@@ -187,8 +188,9 @@ export default {
           { text: "LangChain工作流", link: "/ai/LangChain工作流" },
           { text: "LangChain接入MCP实现流程", link: "/ai/LangChain接入MCP完整实现流程" },
           { text: "LangGraph入门", link: "/ai/LangGraph入门" },
-          {text: "Multi-Agent", link: "/ai/Multi-Agent" },
+          { text: "Multi-Agent", link: "/ai/Multi-Agent" },
           { text: "Dify私有化部署", link: "/ai/Dify私有化部署" },
+          { text: "Vibe Coding和Spec-Kit coding", link: "/ai/Vibe Coding和Spec-Kit coding" }
         ],
       },
       "/life/": {

@@ -14,3 +14,4 @@
 - [LangGraph入门](./LangGraph入门.md)
   [Multi-Agent](./Multi-Agent.md)
 - [Dify私有化部署](./Dify私有化部署.md)
+- [Vibe Coding和Spec-Kit coding](./Vibe%20Coding和Spec-Kit%20coding.md)
