@@ -183,6 +183,7 @@ export default {
         text: "AI",
         items: [
           { text: "DeepSeek构建本地知识库", link: "/ai/DeepSeek构建本地知识库" },
+          { text: "实现Mini-Cursor", link: "/ai/实现Mini-Cursor"},
           { text: "Node开发MCP服务", link: "/ai/Node开发MCP服务" },
           { text: "大模型原理", link: "/ai/大模型原理" },
           { text: "LangChain工作流", link: "/ai/LangChain工作流" },

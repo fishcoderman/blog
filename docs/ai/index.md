@@ -7,6 +7,7 @@
 ## 目录
 
 - [DeepSeek构建本地知识库](./DeepSeek构建本地知识库.md)
+- [实现Mini-Cursor](./实现Mini-Cursor.md)
 - [Node开发MCP服务](./Node开发MCP服务.md)
 - [大模型原理](./大模型原理.md)
 - [LangChain工作流](./LangChain工作流.md)
